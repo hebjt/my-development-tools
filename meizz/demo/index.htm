@@ -1,0 +1,88 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <title>mz test page</title>
+    <style type="text/css">/*<![CDATA[*/
+    html, body{height:100%;max-height:100%;}
+    body{margin:auto;text-align:center;}
+    #wrapper{width:100%;margin:auto;text-align:left;}
+
+    #header{background-color:#CCCCCC;}
+    #footer{text-align:center; height:60px; background-color:#CCCCCC;}
+
+    #container{margin:3px 0;}
+    #content{margin-right:-200px; width:100%; float:left;}
+    #content_inner{margin-right:204px; background-color:yellow; height:300px;}
+    #aside{float:right; width:200px; background-color:#F00; height:300px;}
+    #aside_inner{ background-color:#FFD700;}
+
+    /*#nav{height:30px; background-color:gray; margin-bottom:10px;}
+    #extra{float:right;width:190px; background-color:#EEEEEE; position:relative; z-index:2;}
+    #userbar{line-height:19px;text-align:right;white-space:nowrap;}*/
+    .bg #aside{background-color:red;}
+    /*]]>*/</style>
+    <script type="text/javascript" src="../src/jsloader.js"></script>
+</head>
+
+<body>
+
+    <div id="wrapper">
+        <div id="header">
+        <input type="button" value="show" onclick="mz.dom.show('aside')" />
+        <input type="button" value="hide" onclick="mz.dom.hide('aside')" />
+        <input type="button" value="toggle" onclick="mz.dom.toggle('aside')" />
+        <input type="button" value="listeners" onclick="alert(json(window[mz.guid]._listeners))" />
+        <br/>
+        <input type="button" value="addClass" onclick="mz.dom.addClass('container', 'bg')" />
+        <input type="button" value="removeClass" onclick="mz.dom.removeClass('container', 'bg')" />
+        <input type="button" value="remove" onclick="mz.dom.remove('container')" />
+        <br/>
+        <input type="button" value="mm()" onclick="mm()" />
+        <input type="button" value="mz.fx.fadeout" onclick="mz.fx.fadeout('aside')" />
+        <input type="button" value="mz.fx.fadein" onclick="mz.fx.fadein('aside')" />
+        <input type="button" value="mz.fx.shake" onclick="mz.fx.shake('aside')" />
+        <input type="button" value="mz.fx.highlight" onclick="mz.fx.highlight('aside', {endColor:'#0000FF'})" />
+        <input type="button" value="mz.fx.pulsate" onclick="mz.fx.pulsate('aside', {loop:-1})" />
+
+        <input type="button" value="mz.fx.moveTo" onclick="mz.fx.moveTo('div', [200, 200])" />
+        <input type="button" value="mz.ui.DatePicker" onclick="mz.ui.DatePicker.create()" />
+        </div>
+        <div id="container">
+            <div id="content"><div id="content_inner"><div id="box" style="height:100px; width:100px; background-color:green">block</div>content_inner</div></div>
+            <div id="aside"><b id="bbb">aside</b><div id="aside_inner"></div></div>
+            <div style="clear:both"></div>
+        </div>
+        <div id="footer">footer
+        </div>
+    </div>
+    <div id="div" style="position:absolute; top:100px; left:100px; width:100px; height:100px; background-color:blue;">drag</div>
+
+</body>
+
+<script type="text/javascript">/*<![CDATA[*/
+//Include("mz.ui.DatePicker");
+//var calendar = new mz.ui.DatePicker();
+
+
+function json(e){
+    var s = "";
+    for (var i in e) {
+        var p = e[i];
+        if (typeof p == "function") p = "function(){[native code]};"
+
+        s += i +" = "+ p +"\n";
+    }
+    return s;
+}
+
+
+//Include("mz.dom.highlightable");
+
+
+
+Include("mz.ui.DatePicker");
+
+/*]]>*/</script>
+<img height="18" width="18" src="data:image/gif;base64,R0lGODlhEgASAAAAACwAAAAAEgASAKAAAAD///8CHoSPqcvt74KclNEbLJ565+VJ3TZi5XVWYAi17gsrBQA7">
+</html>
