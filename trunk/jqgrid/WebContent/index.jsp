@@ -42,9 +42,10 @@ $(document).ready(function(){
     // imgpath: WEB_PATH+'/resources/javascript/plugins/jqgrid/css/smoothness/images',    
      rowNum:10,  
      rowList:[10,20,30],  
-     pager: "pjmap",  
+     pager: "#gridpager",  
             
-     multiselect: false,    
+     multiselect: true,
+     subGrid: true,
      sortname: 'id',    
      viewrecords: true,    
      sortorder: "desc",    
@@ -57,9 +58,10 @@ $(document).ready(function(){
       	},    
      caption: "用户信息列表",     
      height: 220    
-     }).navGrid('pjmap',  
-                 {view:true,edit:true,add:false,del:false},  
-                 {closeOnEscape:true}  
+     }).navGrid('#gridpager',  
+                 {view:true,edit:true,add:true,del:false},  
+                 {closeOnEscape:true}
+                // {multipleSearch:true}
      );   
               
  });   
@@ -68,7 +70,7 @@ $(document).ready(function(){
 </head>
 <body>
 <table id="jsonmap"></table>
-<div id="pjmap"></div>
+<div id="gridpager"></div>
 
 </body>
 </html>
