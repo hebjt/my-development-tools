@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN"
+    "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="user">
+
+	<typeAlias alias="user" type="cuijingtao.grid.domain.User" />
+
+	<select id="getAllUser" resultClass="java.util.HashMap" parameterClass="user" remapResults="true">
+		select id,username,password,name,phone,email,addr
+		from user
+		
+    </select>
+    
+    <select id="getUserCount" resultClass="int" parameterClass="user">
+		SELECT COUNT(*)
+		FROM user
+		
+   </select>
+  
+</sqlMap>

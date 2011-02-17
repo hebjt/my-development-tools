@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE daoConfig
+    PUBLIC "-//ibatis.apache.org//DTD DAO Configuration 2.0//EN"
+    "http://ibatis.apache.org/dtd/dao-2.dtd">
+
+<daoConfig>
+
+  <context>
+
+    <transactionManager type="SQLMAP">
+      <property name="SqlMapConfigResource"
+        value="cuijingtao/grid/dao/sql-map-config.xml"/>
+    </transactionManager>
+
+    <dao interface="cuijingtao.grid.dao.iface.UserDAO"
+      implementation="cuijingtao.grid.dao.impl.UserDAOImpl"/>
+    
+  </context>
+
+</daoConfig>
