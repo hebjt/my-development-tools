@@ -34,11 +34,13 @@ public class UserAction extends DispatchAction {
 		//String str = JSONObject.fromObject(jsonUser).toString();
 		Object[] obj = jsonUser.toArray();
 		String str = JsonUtil.toJson(obj);
-		int total = Integer.parseInt(num)/10;
+		int total = Integer.parseInt(num)/10+1;
 		int records = Integer.parseInt(num);
+		
 		str="{\"total\":"+total+",\"currpage\":"+1+",\"records\":"+records+",\"invdata\":"+str+"}";
 		//String str1="{\"dataRows\":"+str+",\"page\":1,\"rows\":10,\"total\":3}"; 
 		System.out.println(str);
+		System.out.println(records);
 		//System.out.print(str1);
 		out.write(str); 
 		
