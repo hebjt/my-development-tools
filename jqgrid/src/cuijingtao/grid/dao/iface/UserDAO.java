@@ -15,5 +15,5 @@ public interface UserDAO {
 	@SuppressWarnings("rawtypes")
 	Map getAllUser(User user);
 	
-	
+	int getUserCount();
 }

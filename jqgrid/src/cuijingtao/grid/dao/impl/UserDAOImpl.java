@@ -28,6 +28,9 @@ public class UserDAOImpl extends SqlMapDaoTemplate implements UserDAO {
 		map.put("RowCount", cnt);
 		return map;
 	}
+	public int getUserCount(){
+		return (Integer) queryForObject("user.getUserCount", null);
+	}
 
 	
 

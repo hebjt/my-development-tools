@@ -57,13 +57,13 @@ $(document).ready(function(){
      	 repeatitems : false    
       	},    
      caption: "用户信息列表",     
-     height: 220    
+     height: 220,
+     width:800
      }).navGrid('#gridpager',  
-                 {view:true,edit:true,add:true,del:false},  
+                 {view:true,edit:false,add:true,del:false},  
                  {closeOnEscape:true}
                 // {multipleSearch:true}
-     );   
-              
+     )
  });   
 </script>
 

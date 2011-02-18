@@ -11,6 +11,9 @@ public class User extends ActionForm {
 	private String name;
 	private String addr;
 	private String email;
+	private int currPage;
+	private int pageSize;
+	
 	public int getId() {
 		return id;
 	}
@@ -52,6 +55,18 @@ public class User extends ActionForm {
 	}
 	public void setEmail(String email) {
 		this.email = email;
+	}
+	public int getCurrPage() {
+		return currPage;
+	}
+	public void setCurrPage(int currPage) {
+		this.currPage = currPage;
+	}
+	public int getPageSize() {
+		return pageSize;
+	}
+	public void setPageSize(int pageSize) {
+		this.pageSize = pageSize;
 	}
 	
 
