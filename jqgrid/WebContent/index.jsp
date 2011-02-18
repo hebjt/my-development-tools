@@ -59,12 +59,17 @@ $(document).ready(function(){
      caption: "用户信息列表",     
      height: 220,
      width:800
-     }).navGrid('#gridpager',  
-                 {view:true,edit:true,add:true,del:false},
-                 {closeOnEscape:true}
-                // {multipleSearch:true}
-     )
-     
+     })/*.navGrid('#gridpager',  
+                 {view:true,edit:true,add:true,del:false,multipleSearch:true},
+                 {},
+                 {},
+                 {},
+                 {},
+                 {}
+                
+                
+     )*/
+     jQuery("#jsonmap").jqGrid('navGrid','#gridpager',{del:true,add:true,edit:true},{},{},{},{multipleSearch:true});
     function processAddEdit(response){
 	  var success =true;
 	  var message ="";
