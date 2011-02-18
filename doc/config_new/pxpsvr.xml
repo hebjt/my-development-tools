@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<config>
+	<wsadr>
+		<url value="http://192.168.1.14:4688" />
+		<ns value="urn:channelSoapServer" />
+		<oh value="1"/>
+		<method value="setChannel" />
+		<soapuri value="http://192.168.1.14:4688/setChannel" />
+		<tracker value="192.168.1.14:10080" />
+	</wsadr>
+</config>
