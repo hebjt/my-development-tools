@@ -24,6 +24,9 @@ public class UserService {
 	public Map getAllUser(User user){
 		return userDao.getAllUser(user);
 	}
+	public int getCount(){
+		return userDao.getUserCount();
+	}
 	
 	
 }

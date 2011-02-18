@@ -9,12 +9,14 @@
 	<select id="getAllUser" resultClass="java.util.HashMap" parameterClass="user" remapResults="true">
 		select id,username,password,name,phone,email,addr
 		from user
+		LIMIT #currPage#,#pageSize#
 		
     </select>
     
     <select id="getUserCount" resultClass="int" parameterClass="user">
 		SELECT COUNT(*)
 		FROM user
+		
 		
    </select>
   
