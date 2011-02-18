@@ -31,12 +31,12 @@ $(document).ready(function(){
       datatype: 'json',    
       colNames:['编号','注册名称','密码','真实姓名','地址','电子邮件'],    
       colModel:[    
-               {name:'id',index:'id', width:90,sorttype:"int"},    
-               {name:'username',index:'username', width:110},    
-               {name:'password',index:'password', width:80},    
-               {name:'name',index:'name', width:80},      
-               {name:'addr',index:'addr', width:80},     
-               {name:'email',index:'email', width:80}      
+               {name:'id',index:'id', width:90,sorttype:"int",editable:true, editoptions:{readonly:true}},    
+               {name:'username',index:'username', width:110,editable:true, editoptions:{readonly:true}},    
+               {name:'password',index:'password', width:80,editable:true, editoptions:{readonly:true}},    
+               {name:'name',index:'name', width:80,editable:true, editoptions:{readonly:true}},      
+               {name:'addr',index:'addr', width:80,editable:true, editoptions:{readonly:true}},     
+               {name:'email',index:'email', width:80,editable:true, editoptions:{readonly:true}}      
               ],    
          
     // imgpath: WEB_PATH+'/resources/javascript/plugins/jqgrid/css/smoothness/images',    
@@ -61,26 +61,6 @@ $(document).ready(function(){
      width:800
      }).navGrid('#gridpager',  
                  {view:true,edit:true,add:true,del:false},
-                 {},
-                 {//edit   这里注意 edit ,add ,del 的顺序，默认的这个顺序，好像是不能改的
-                	//afterShowForm:afterShowEdit,
-                	afterSubmit:processAddEdit ,
-                	//beforeSubmit:validateData,
-                	closeAfterAdd:true,
-                	closeAfterEdit:true,
-                	reloadAfterSubmit:true
-                	},
-                	{//add          //afterShowForm:afterShowAdd,
-                	afterSubmit:processAddEdit ,
-                	//beforeSubmit:validateData,
-                	closeAfterAdd:true,
-                	closeAfterEdit:true
-                	},{                                                                                                                                                       
-
-                	//del
-
-                	},
-
                  {closeOnEscape:true}
                 // {multipleSearch:true}
      )
