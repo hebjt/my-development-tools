@@ -60,10 +60,51 @@ $(document).ready(function(){
      height: 220,
      width:800
      }).navGrid('#gridpager',  
-                 {view:true,edit:false,add:true,del:false},  
+                 {view:true,edit:true,add:true,del:false},
+                 {},
+                 {//edit   这里注意 edit ,add ,del 的顺序，默认的这个顺序，好像是不能改的
+                	//afterShowForm:afterShowEdit,
+                	afterSubmit:processAddEdit ,
+                	//beforeSubmit:validateData,
+                	closeAfterAdd:true,
+                	closeAfterEdit:true,
+                	reloadAfterSubmit:true
+                	},
+                	{//add          //afterShowForm:afterShowAdd,
+                	afterSubmit:processAddEdit ,
+                	//beforeSubmit:validateData,
+                	closeAfterAdd:true,
+                	closeAfterEdit:true
+                	},{                                                                                                                                                       
+
+                	//del
+
+                	},
+
                  {closeOnEscape:true}
                 // {multipleSearch:true}
      )
+     
+    function processAddEdit(response){
+	  var success =true;
+	  var message ="";
+	  var json = eval('('+ response.responseText + ')');
+	  /*
+	  if(json.errors){
+	     success =false;
+	     for(i=0;i < json.errors.length;i++){
+	      message +=json.errors[i];
+	     }
+	  }
+	  */
+	  if(!json.success){
+	     success =json.success;
+	     message =json.errors;
+	  }
+	  var new_id ="1";
+	  return [success,message,new_id];
+	  }
+
  });   
 </script>
 
