@@ -26,17 +26,17 @@ html,body {
 <script type="text/javascript">
 $(document).ready(function(){      
   jQuery("#jsonmap").jqGrid({       
-      url:'jsonlist.do',  
+      url:'jsonlist.do?method=exec',  
       //url:WEB_PATH+'/excludes/post.jsp',   
       datatype: 'json',    
       colNames:['编号','注册名称','密码','真实姓名','地址','电子邮件'],    
       colModel:[    
-               {name:'id',index:'id', width:90,sorttype:"int",editable:true, editoptions:{readonly:true}},    
-               {name:'username',index:'username', width:110,editable:true, editoptions:{readonly:true}},    
-               {name:'password',index:'password', width:80,editable:true, editoptions:{readonly:true}},    
-               {name:'name',index:'name', width:80,editable:true, editoptions:{readonly:true}},      
-               {name:'addr',index:'addr', width:80,editable:true, editoptions:{readonly:true}},     
-               {name:'email',index:'email', width:80,editable:true, editoptions:{readonly:true}}      
+               {name:'id',index:'id', width:90,sorttype:"int",editable:true, editoptions:{readonly:false}},    
+               {name:'username',index:'username', width:110,editable:true, editoptions:{readonly:false}},    
+               {name:'password',index:'password', width:80,editable:true, editoptions:{readonly:false}},    
+               {name:'name',index:'name', width:80,editable:true, editoptions:{readonly:false}},      
+               {name:'addr',index:'addr', width:80,editable:true, editoptions:{readonly:false}},     
+               {name:'email',index:'email', width:80,editable:true, editoptions:{readonly:false}}      
               ],    
          
     // imgpath: WEB_PATH+'/resources/javascript/plugins/jqgrid/css/smoothness/images',    
@@ -58,19 +58,12 @@ $(document).ready(function(){
       	},    
      caption: "用户信息列表",     
      height: 220,
-     width:800
-     })/*.navGrid('#gridpager',  
-                 {view:true,edit:true,add:true,del:false,multipleSearch:true},
-                 {},
-                 {},
-                 {},
-                 {},
-                 {}
-                
-                
-     )*/
+     width:800,
+     editurl:'jsonlist.do?method=oper'
+     });
      jQuery("#jsonmap").jqGrid('navGrid','#gridpager',{del:true,add:true,edit:true},{},{},{},{multipleSearch:true});
-    function processAddEdit(response){
+    
+     function processAddEdit(response){
 	  var success =true;
 	  var message ="";
 	  var json = eval('('+ response.responseText + ')');
