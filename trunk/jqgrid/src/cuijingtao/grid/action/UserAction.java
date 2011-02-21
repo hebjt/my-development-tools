@@ -22,9 +22,10 @@ public class UserAction extends DispatchAction {
 	/**
 	 * 
 	 */
-	public ActionForward execute(ActionMapping mapping, ActionForm form,
+	public ActionForward exec(ActionMapping mapping, ActionForm form,
 			HttpServletRequest request, HttpServletResponse response)
 			throws Exception {
+		
 		PrintWriter out = response.getWriter();
 		UserService userver = new UserService();
 		User user = new User();
@@ -36,8 +37,8 @@ public class UserAction extends DispatchAction {
 
 		int records = userver.getCount(); // 记录总数
 
-		String page = request.getParameter("page"); // 取得当前页数,注意这是jqgrid自身的参数
-		String rows = request.getParameter("rows"); // 取得每页显示行数，,注意这是jqgrid自身的参数
+		String page = request.getParameter("page")==null?"1":request.getParameter("page"); // 取得当前页数,注意这是jqgrid自身的参数
+		String rows = request.getParameter("rows")==null?"10":request.getParameter("rows"); // 取得每页显示行数，,注意这是jqgrid自身的参数
 
 		int total_pages = 0;
 		int limit = Integer.parseInt(rows);
@@ -82,5 +83,39 @@ public class UserAction extends DispatchAction {
 		out.write(jsonObject.toString());
 
 		return null;
+	}
+	public ActionForward oper(ActionMapping mapping, ActionForm form,
+			HttpServletRequest request, HttpServletResponse response)
+			throws Exception {
+		//System.out.println("***************************");
+		String oper=request.getParameter("oper");
+		if(oper.equals("add")){
+			System.out.println("add*************");
+			User user = new User();
+			UserService uService = new UserService();
+			String username=request.getParameter("username");
+			String password=request.getParameter("password");
+			String name=request.getParameter("name");
+			String phone=request.getParameter("phone");
+			String email=request.getParameter("email");
+			String addr=request.getParameter("addr");
+			user.setUsername(username);
+			user.setPassword(password);
+			user.setName(name);
+			user.setPhone(phone);
+			user.setAddr(addr);
+			user.setEmail(email);
+			uService.addUser(user);
+			
+		}
+		if(oper.equals("edit")){
+			System.out.println("edit*************");
+		}
+		if(oper.equals("del")){
+			System.out.println("del*************");
+		}
+		
+		
+		return mapping.findForward("welcome");
 	}
 }

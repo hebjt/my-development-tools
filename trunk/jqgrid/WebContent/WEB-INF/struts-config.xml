@@ -5,11 +5,11 @@
 	<form-beans>
 	</form-beans>
 	<global-forwards>
-		
+		<forward name="weclome" path="/jsonlist.do?method=exec"></forward>
 	</global-forwards>
 
 	<action-mappings>
-		<action path="/jsonlist" type="cuijingtao.grid.action.UserAction" scope="request">
+		<action path="/jsonlist" type="cuijingtao.grid.action.UserAction" scope="request" parameter="method">
 		
 		
 		</action>
