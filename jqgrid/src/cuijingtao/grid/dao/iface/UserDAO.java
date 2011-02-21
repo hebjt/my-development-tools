@@ -8,7 +8,7 @@ import cuijingtao.grid.domain.User;
 
 public interface UserDAO {
 	/**
-	 * 获取所有用户信息
+	 * 锟斤拷取锟斤拷锟斤拷锟矫伙拷锟斤拷息
 	 * @param id
 	 * @return
 	 */
@@ -16,4 +16,6 @@ public interface UserDAO {
 	Map getAllUser(User user);
 	
 	int getUserCount();
+	
+	void addUser(User user);
 }

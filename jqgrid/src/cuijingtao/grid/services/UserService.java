@@ -28,5 +28,9 @@ public class UserService {
 		return userDao.getUserCount();
 	}
 	
+	public void addUser(User user){
+		userDao.addUser(user);
+	}
+	
 	
 }

@@ -19,5 +19,10 @@
 		
 		
    </select>
+   <insert id="addUser" parameterClass="user">
+   	insert into user(username,password,name,phone,email,addr)
+   	values(#username#,#password#,#name#,#phone#,#email#,#addr#)
+   
+   </insert>
   
 </sqlMap>

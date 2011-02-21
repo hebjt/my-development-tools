@@ -32,6 +32,15 @@ public class UserDAOImpl extends SqlMapDaoTemplate implements UserDAO {
 		return (Integer) queryForObject("user.getUserCount", null);
 	}
 
+	/* (non-Javadoc)
+	 * @see cuijingtao.grid.dao.iface.UserDAO#addUser(cuijingtao.grid.domain.User)
+	 */
+	@Override
+	public void addUser(User user) {
+		insert("user.addUser", user);
+		//return 
+	}
+
 	
 
 
