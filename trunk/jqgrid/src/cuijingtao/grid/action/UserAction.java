@@ -109,7 +109,25 @@ public class UserAction extends DispatchAction {
 			
 		}
 		if(oper.equals("edit")){
+			
 			System.out.println("edit*************");
+			User user = new User();
+			UserService uService = new UserService();
+			String id = request.getParameter("id");
+			String username=request.getParameter("username");
+			String password=request.getParameter("password");
+			String name=request.getParameter("name");
+			String phone=request.getParameter("phone");
+			String email=request.getParameter("email");
+			String addr=request.getParameter("addr");
+			user.setId(Integer.parseInt(id));
+			user.setUsername(username);
+			user.setPassword(password);
+			user.setName(name);
+			user.setPhone(phone);
+			user.setAddr(addr);
+			user.setEmail(email);
+			uService.editUser(user);
 		}
 		if(oper.equals("del")){
 			System.out.println("del*************");

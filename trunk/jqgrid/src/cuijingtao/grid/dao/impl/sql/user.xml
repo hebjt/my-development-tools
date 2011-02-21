@@ -24,5 +24,11 @@
    	values(#username#,#password#,#name#,#phone#,#email#,#addr#)
    
    </insert>
+   <update id="editUser" parameterClass="user">
+   	update user
+   	set username=#username#,password=#password#,name=#name#,phone=#phone#,email=#email#,addr=#addr#
+   	where id=#id#
+   	
+   </update>
   
 </sqlMap>
