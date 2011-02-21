@@ -4,9 +4,15 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <title>My First Grid</title>
+ 
+<link rel="stylesheet" type="text/css" media="screen"
+	href="css/ui-bl-jquery/jquery-ui-1.8.9.custom.css" />
 
+
+<!-- 	
 <link rel="stylesheet" type="text/css" media="screen"
 	href="css/ui-lightness/jquery-ui-1.8.9.custom.css" />
+-->
 <link rel="stylesheet" type="text/css" media="screen"
 	href="css/ui.jqgrid.css" />
 
@@ -31,7 +37,7 @@ $(document).ready(function(){
       datatype: 'json',    
       colNames:['编号','注册名称','密码','真实姓名','地址','电子邮件'],    
       colModel:[    
-               {name:'id',index:'id', width:90,sorttype:"int",editable:true, editoptions:{readonly:false}},    
+               {name:'id',index:'id', width:90,sorttype:"int",editable:false, editoptions:{readonly:false}},    
                {name:'username',index:'username', width:110,editable:true, editoptions:{readonly:false}},    
                {name:'password',index:'password', width:80,editable:true, editoptions:{readonly:false}},    
                {name:'name',index:'name', width:80,editable:true, editoptions:{readonly:false}},      
@@ -57,6 +63,7 @@ $(document).ready(function(){
      	 repeatitems : false    
       	},    
      caption: "用户信息列表",     
+     prmNames:{search:"search"},
      height: 220,
      width:800,
      editurl:'jsonlist.do?method=oper'

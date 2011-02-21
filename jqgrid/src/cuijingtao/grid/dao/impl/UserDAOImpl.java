@@ -41,6 +41,16 @@ public class UserDAOImpl extends SqlMapDaoTemplate implements UserDAO {
 		//return 
 	}
 
+	/* (non-Javadoc)
+	 * @see cuijingtao.grid.dao.iface.UserDAO#editUser(cuijingtao.grid.domain.User)
+	 */
+	@Override
+	public void editUser(User user) {
+		// TODO Auto-generated method stub
+		update("user.editUser", user);
+		
+	}
+
 	
 
 

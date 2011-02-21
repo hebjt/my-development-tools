@@ -18,4 +18,6 @@ public interface UserDAO {
 	int getUserCount();
 	
 	void addUser(User user);
+	
+	void editUser(User user);
 }
