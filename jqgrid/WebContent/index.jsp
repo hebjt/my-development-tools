@@ -78,7 +78,7 @@ $(document).ready(function(){
     	      datatype: "json",  
     	      colNames: ['信用卡编码','信用卡名称','发卡行','操作'],  
     	      colModel: [  
-    	                 {name:"cardno",index:"cardno",width:130,editable:true,editoptions:{readonly:false},key:true},  
+    	                 {name:"cardno",index:"cardno",width:130,editable:true,editoptions:{readonly:true},key:true},  
     	                 //若是页面没有id字段，可以key=true设置成id,jqgrid会把cardno默认为id,而页面保持不变，方便开发
     	                 {name:"cardname",index:"cardname",width:80,align:"right",editable:true,editoptions:{readonly:false}},  
     	                 {name:"cardfrom",index:"cardfrom",width:80,align:"right",editable:true,editoptions:{readonly:false}},
@@ -93,7 +93,7 @@ $(document).ready(function(){
     	                  }, 
     	       
     	    	onCellSelect:function(rowid,iCol,cellcontent,e){
-    	    		//alert(rowid);
+    	    		//alert(iCol);
     	    		rowid=rowid;
     	    		rowdata=cellcontent;
     	    		//alert(rowdata);
