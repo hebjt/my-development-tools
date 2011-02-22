@@ -13,6 +13,9 @@ public class User extends ActionForm {
 	private String email;
 	private int currPage;
 	private int pageSize;
+	private String sort;
+	private String order;
+	
 	
 	public int getId() {
 		return id;
@@ -68,6 +71,19 @@ public class User extends ActionForm {
 	public void setPageSize(int pageSize) {
 		this.pageSize = pageSize;
 	}
+	public String getOrder() {
+		return order;
+	}
+	public void setOrder(String order) {
+		this.order = order;
+	}
+	public String getSort() {
+		return sort;
+	}
+	public void setSort(String sort) {
+		this.sort = sort;
+	}
+	
 	
 
 }

@@ -8,6 +8,7 @@ import com.ibatis.dao.client.DaoManager;
 import com.ibatis.dao.client.template.SqlMapDaoTemplate;
 
 import cuijingtao.grid.dao.iface.UserDAO;
+import cuijingtao.grid.domain.CardInfo;
 import cuijingtao.grid.domain.User;
 
 
@@ -49,6 +50,28 @@ public class UserDAOImpl extends SqlMapDaoTemplate implements UserDAO {
 		// TODO Auto-generated method stub
 		update("user.editUser", user);
 		
+	}
+
+	/* (non-Javadoc)
+	 * @see cuijingtao.grid.dao.iface.UserDAO#getCardInfo(cuijingtao.grid.domain.CardInfo)
+	 */
+	@Override
+	public Map getCardInfo(CardInfo card) {
+		// TODO Auto-generated method stub
+		Map map = new HashMap(1);
+		List cardList = queryForList("user.getCardInfo", card);
+		map.put("ResultSet", cardList);
+		
+		return map;
+	}
+
+	/* (non-Javadoc)
+	 * @see cuijingtao.grid.dao.iface.UserDAO#getCardCount()
+	 */
+	@Override
+	public int getCardCount(CardInfo card) {
+		// TODO Auto-generated method stub
+		return (Integer) queryForObject("user.getCardCount", card);
 	}
 
 	

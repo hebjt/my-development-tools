@@ -6,6 +6,7 @@ import com.ibatis.dao.client.DaoManager;
 
 import cuijingtao.grid.dao.UserDaoConfig;
 import cuijingtao.grid.dao.iface.UserDAO;
+import cuijingtao.grid.domain.CardInfo;
 import cuijingtao.grid.domain.User;
 
 public class UserService {
@@ -33,6 +34,14 @@ public class UserService {
 	}
 	public void editUser(User user){
 		userDao.editUser(user);
+	}
+	
+	public Map getCardInfo(CardInfo card){
+		return userDao.getCardInfo(card);
+	}
+	
+	public int getCardCount(CardInfo card){
+		return userDao.getCardCount(card);
 	}
 	
 }
