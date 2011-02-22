@@ -59,7 +59,7 @@ $(document).ready(function(){
      multiselect: true,
      subGrid: true,//开启子表格支持
      subGridRowExpanded: function(subgrid_id, row_id) {
-    	
+    	var lastsel2;
     	 var subgrid_table_id;
     	 var rowid;
     	 subgrid_table_id = subgrid_id + "_t";   // (3)根据subgrid_id定义对应的子表格的table的id  
@@ -108,6 +108,16 @@ $(document).ready(function(){
     	    	   
     	    	   
     	       },
+    	       /*选中一行修改
+    	      onSelectRow: function(id){
+    	      //alert(id);
+      			if(id && id!==lastsel2){
+        			jQuery("#"+subgrid_table_id).restoreRow(lastsel2);
+        			jQuery("#"+subgrid_table_id).editRow(id,true);
+          			lastsel2=id;
+      			}
+    		 },
+				*/
     	       cellEdit:true,
     	       cellurl:'cardlist.do?method=cellEdit&rid='+row_id,
     	       prmNames: {search: "search"},  
