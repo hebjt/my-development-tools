@@ -96,7 +96,18 @@ $(document).ready(function(){
     	    		//alert(rowid);
     	    		rowid=rowid;
     	    		rowdata=cellcontent;
+    	    		//alert(rowdata);
     	    	},
+    	       afterEditCell: function (id,name,val,iRow,iCol){
+    	    	   //alert(val);
+    	       },
+    	       afterSaveCell : function(rowid,name,val,iRow,iCol) {
+    	    	   //alert(val);
+    	    	   
+    	    	   
+    	    	   
+    	    	   
+    	       },
     	       cellEdit:true,
     	       cellurl:'cardlist.do?method=cellEdit&rid='+row_id,
     	       prmNames: {search: "search"},  
