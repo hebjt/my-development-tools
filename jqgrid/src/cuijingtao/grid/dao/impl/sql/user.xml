@@ -5,10 +5,12 @@
 <sqlMap namespace="user">
 
 	<typeAlias alias="user" type="cuijingtao.grid.domain.User" />
+	<typeAlias alias="card" type="cuijingtao.grid.domain.CardInfo" />
 
 	<select id="getAllUser" resultClass="java.util.HashMap" parameterClass="user" remapResults="true">
 		select id,username,password,name,phone,email,addr
 		from user
+		
 		LIMIT #currPage#,#pageSize#
 		
     </select>
@@ -30,5 +32,20 @@
    	where id=#id#
    	
    </update>
+   
+   	<select id="getCardInfo" resultClass="java.util.HashMap" parameterClass="card" remapResults="true">
+		select cardno,cardname,cardfrom,cardstate
+		from cardinfo
+		where parentid=#parentid#
+		LIMIT #currPage#,#pageSize#
+		
+    </select>
+    <select id="getCardCount" resultClass="int" parameterClass="card">
+		SELECT COUNT(*)
+		FROM cardinfo
+		where parentid=#parentid#
+		
+		
+   </select>
   
 </sqlMap>

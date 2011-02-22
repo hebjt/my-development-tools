@@ -13,6 +13,11 @@
 		
 		
 		</action>
+		<action path="/cardlist" type="cuijingtao.grid.action.CardAction" scope="request" parameter="method">
+		
+		
+		</action>
+		
 	</action-mappings>
 
 	<message-resources parameter="com.cuijingtao.properties.ApplicationResources" />

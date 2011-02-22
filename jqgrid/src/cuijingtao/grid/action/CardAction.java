@@ -1,3 +1,7 @@
+/**
+ * Administrator
+ * 2011-2-22
+ */
 package cuijingtao.grid.action;
 
 import java.io.PrintWriter;
@@ -14,33 +18,38 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.actions.DispatchAction;
 
-import cuijingtao.grid.domain.User;
+import cuijingtao.grid.domain.CardInfo;
 import cuijingtao.grid.services.UserService;
 import cuijingtao.util.JsonUtil;
 
-public class UserAction extends DispatchAction {
-	/**
-	 * 
-	 */
+/**
+ * @author Administrator
+ *
+ */
+public class CardAction extends DispatchAction {
+
 	public ActionForward exec(ActionMapping mapping, ActionForm form,
 			HttpServletRequest request, HttpServletResponse response)
 			throws Exception {
-		
 		PrintWriter out = response.getWriter();
 		UserService userver = new UserService();
-		User user = new User();
+		CardInfo card = new CardInfo();
 
 		
 		//String num = map.get("RowCount").toString();
 		
 		//int num = userver.getCount();
 
-		int records = userver.getCount(); // 记录总数
+		
 
 		String page = request.getParameter("page"); // 取得当前页数,注意这是jqgrid自身的参数
 		String rows = request.getParameter("rows"); // 取得每页显示行数，,注意这是jqgrid自身的参数
 		String sort = request.getParameter("sidx");//排序字段
 		String order = request.getParameter("sord");//排序方式
+		
+		String pid = request.getParameter("pid");
+		card.setParentid(Integer.parseInt(pid));
+		int records = userver.getCardCount(card); // 记录总数
 		//System.out.println("***************"+order);
 		int total_pages = 0;
 		int limit = Integer.parseInt(rows);
@@ -55,26 +64,28 @@ public class UserAction extends DispatchAction {
 			t_page = total_pages;
 		}
 		int start = limit * t_page - limit;
-		user.setCurrPage(start);
-		user.setPageSize(limit);
+		
+		card.setCurrPage(start);
+		card.setPageSize(limit);
+		card.setParentid(Integer.parseInt(pid));
 		//user.setOrder(order);
 		//user.setSort(sort);
 
-		Map map = userver.getAllUser(user);
+		Map map = userver.getCardInfo(card);
 
-		List jsonUser = (List) map.get("ResultSet");
+		List jsonCard = (List) map.get("ResultSet");
 
 		// Object jsonArray = jsonUser.toArray();
 		// String str = JSONObject.fromObject(jsonUser).toString();
 		JSONObject jsonObject = new JSONObject();
-		Object[] obj = jsonUser.toArray();
+		Object[] obj = jsonCard.toArray();
 		String str = JsonUtil.toJson(obj);
 
 		jsonObject.put("total", total_pages);
 		jsonObject.put("currpage", t_page);
 		jsonObject.put("records", records);
 		jsonObject.put("rows", rows);
-		jsonObject.put("invdata", str);
+		jsonObject.put("subgrid", str);
 		/*
 		 * 
 		 * 手动拼接json字符串
@@ -87,57 +98,17 @@ public class UserAction extends DispatchAction {
 		out.write(jsonObject.toString());
 
 		return null;
+		
 	}
-	public ActionForward oper(ActionMapping mapping, ActionForm form,
+	public ActionForward cellEdit(ActionMapping mapping, ActionForm form,
 			HttpServletRequest request, HttpServletResponse response)
 			throws Exception {
-		//System.out.println("***************************");
-		String oper=request.getParameter("oper");
-		if(oper.equals("add")){
-			System.out.println("add*************");
-			User user = new User();
-			UserService uService = new UserService();
-			String username=request.getParameter("username");
-			String password=request.getParameter("password");
-			String name=request.getParameter("name");
-			String phone=request.getParameter("phone");
-			String email=request.getParameter("email");
-			String addr=request.getParameter("addr");
-			user.setUsername(username);
-			user.setPassword(password);
-			user.setName(name);
-			user.setPhone(phone);
-			user.setAddr(addr);
-			user.setEmail(email);
-			uService.addUser(user);
-			
-		}
-		if(oper.equals("edit")){
-			
-			System.out.println("edit*************");
-			User user = new User();
-			UserService uService = new UserService();
-			String id = request.getParameter("id");
-			String username=request.getParameter("username");
-			String password=request.getParameter("password");
-			String name=request.getParameter("name");
-			String phone=request.getParameter("phone");
-			String email=request.getParameter("email");
-			String addr=request.getParameter("addr");
-			user.setId(Integer.parseInt(id));
-			user.setUsername(username);
-			user.setPassword(password);
-			user.setName(name);
-			user.setPhone(phone);
-			user.setAddr(addr);
-			user.setEmail(email);
-			uService.editUser(user);
-		}
-		if(oper.equals("del")){
-			System.out.println("del*************");
-		}
+		String rid = request.getParameter("rid");
+		String id = request.getParameter("id");
+		System.out.println("rid的值是****************"+rid);
+		System.out.println("id的值是*****************"+id);
 		
-		
-		return mapping.findForward("welcome");
+		return null;
 	}
+
 }
