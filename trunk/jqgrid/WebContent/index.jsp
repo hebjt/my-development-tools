@@ -48,6 +48,9 @@ $(document).ready(function(){
      rowNum:10,  
      rowList:[10,20,30],  
      pager: "#gridpager",  
+     onSelectRow: function(id){
+    	 //alert(id);
+     },
             
      multiselect: true,
      subGrid: true,//开启子表格支持
