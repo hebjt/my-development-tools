@@ -105,11 +105,17 @@ public class CardAction extends DispatchAction {
 			throws Exception {
 		String rid = request.getParameter("rid");
 		String id = request.getParameter("id");
-		String state = request.getParameter("cardstate");
+		String cardstate = request.getParameter("cardstate");
+		String cardno = request.getParameter("cardno");
+		String cardname = request.getParameter("cardname");
+		String cardfrom = request.getParameter("cardfrom");
 		
 		System.out.println("rid的值是****************"+rid);
 		System.out.println("id的值是*****************"+id);
-		System.out.println("修改state的值是*****************"+state);
+		System.out.println("修改cardstate的值是*****************"+cardstate);
+		System.out.println("修改cardno的值是*****************"+cardno);
+		System.out.println("修改cardname的值是*****************"+cardname);
+		System.out.println("修改cardfrom的值是*****************"+cardfrom);
 		
 		return null;
 	}
