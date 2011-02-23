@@ -4,23 +4,10 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <title>My First Grid</title>
- <!-- 	
-<link rel="stylesheet" type="text/css" media="screen"
-	href="css/ui-bl-jquery/jquery-ui-1.8.9.custom.css" />
-
--->
-
-<link rel="stylesheet" type="text/css" media="screen"
-	href="css/ui-bl-jquery/jquery.ui.core.css" />
-<link rel="stylesheet" type="text/css" media="screen"
-	href="css/ui-bl-jquery/jquery.ui.theme.css" />
-
-<!--  
-<link rel="stylesheet" type="text/css" media="screen"
-	href="css/ui-lightness/jquery-ui-1.8.9.custom.css" />
--->	
-<link rel="stylesheet" type="text/css" media="screen"
-	href="css/ui.jqgrid.css" />
+<link rel="stylesheet" type="text/css" media="screen" href="css/jqueryui/ui.multiselect.css" />
+	
+<link rel="stylesheet" type="text/css" media="screen" href="css/ui-bl-jquery/jquery-ui-1.8.9.custom.css" />
+<link rel="stylesheet" type="text/css" media="screen" href="css/ui.jqgrid.css" />
 
 <style>
 html,body {
@@ -30,9 +17,15 @@ html,body {
 }
 </style>
 
-<script src="script/jquery-1.4.2.min.js" type="text/javascript"></script>
+<script src="script/jquery/jquery-1.4.2.min.js" type="text/javascript"></script>
+<script src="script/jqueryui/jquery-ui-1.8.9.custom.min.js" type="text/javascript"></script>
+<script src="script/jqueryui/jquery.ui.sortable.min.js" type="text/javascript"></script>
+<script src="script/jqueryui/jquery.ui.core.min.js" type="text/javascript"></script>
+<script src="script/jqueryui/jquery.ui.dialog.min.js" type="text/javascript"></script>
+<script src="script/jqueryui/ui.multiselect.js" type="text/javascript"></script>
+
 <script src="script/il8n/grid.locale-cn.js" type="text/javascript"></script>
-<script src="script/jquery.jqGrid.min.js" type="text/javascript"></script>
+<script src="script/jqgrid/jquery.jqGrid.min.js" type="text/javascript"></script>
 
 <script type="text/javascript">
 $(document).ready(function(){
@@ -147,7 +140,15 @@ $(document).ready(function(){
      editurl:'jsonlist.do?method=oper'
      });
      jQuery("#jsonmap").jqGrid('navGrid','#gridpager',{del:true,add:true,edit:true},{},{},{},{multipleSearch:true});
-    
+     /*
+     jQuery("#jsonmap").jqGrid('navButtonAdd','#gridpager',{ 
+    	 caption: "Columns", 
+    	 title: "Reorder Columns", 
+    	 onClickButton : function (){ 
+    		 jQuery("#jsonmap").jqGrid('columnChooser');}
+     			//alert("111");}
+      });
+    */
      function processAddEdit(response){
 	  var success =true;
 	  var message ="";
@@ -167,6 +168,9 @@ $(document).ready(function(){
 	  var new_id ="1";
 	  return [success,message,new_id];
 	  }
+    $("#ed").click(function(){
+    	jQuery("#jsonmap").jqGrid('columnChooser');
+    });
 
  });   
 </script>
@@ -175,6 +179,6 @@ $(document).ready(function(){
 <body>
 <table id="jsonmap"></table>
 <div id="gridpager"></div>
-
+<input type="button" id="ed" value="edit clum" /> 
 </body>
 </html>
