@@ -150,6 +150,7 @@ $(document).ready(function(){
      beforeShowForm:function(formid){
      	alert("22222");
      }
+     
      });
      jQuery("#jsonmap").jqGrid('navGrid','#gridpager',{del:true,add:true,edit:true},{},{},{},{multipleSearch:true});
      /*
@@ -205,7 +206,18 @@ $(document).ready(function(){
     	//alert("1111");
     	//jQuery.jgrid.setGridParam();
     	jQuery("#jsonmap").setGridParam({}).hideCol("operate").trigger("reloadGrid");
+    	//jQuery("#grid_id").jqGrid('setGridParam',{...}).jqGrid('hideCol',"somecol").trigger("reloadGrid");
+    	//alert("q");
+    	/*
+    	var gsr = jQuery("#jsonmap").jqGrid('getGridParam','selrow');
+    	alert(gsr);
+		if(gsr){
+			jQuery("#jsonmap").jqGrid('GridToForm',gsr,"#order");
+		} else {
+			alert("Please select Row");
+		}	
     	
+    	*/
     
     });
 
@@ -216,6 +228,7 @@ $(document).ready(function(){
 <body>
 <table id="jsonmap"></table>
 <div id="gridpager"></div>
+
 <input type="button" id="ed" value="edit clum" /> 
 <input type="button" id="hid" value="hidden clum" /> 
 </body>
