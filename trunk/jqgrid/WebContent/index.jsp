@@ -39,8 +39,9 @@ $(document).ready(function(){
                {name:'id',index:'id', width:90,sorttype:"int",editable:false, editoptions:{readonly:false},formatter:formatid},    
                {name:'username',index:'username', width:110,editable:true, editoptions:{readonly:false}},    
                {name:'password',index:'password', width:80,editable:true, editoptions:{readonly:false}},    
-               {name:'name',index:'name', width:80,editable:true, editoptions:{readonly:false}},      
-               {name:'addr',index:'addr', width:80,editable:true, editoptions:{readonly:false}},     
+               {name:'name',index:'name', width:80,editable:true, editoptions:{readonly:false}},
+                    
+               {name:'addr',index:'addr', width:80,editable:true, editoptions:{readonly:false}},    
                {name:'email',index:'email', width:80,editable:true, editoptions:{readonly:false}},
                {name:'operate',index:'opr', width:80,formatter:hrefValue}      
               ],    
@@ -141,7 +142,14 @@ $(document).ready(function(){
      prmNames:{search:"search"},
      height: 220,
      width:800,
-     editurl:'jsonlist.do?method=oper'
+     editurl:'jsonlist.do?method=oper',
+     afterShowForm:function(formid){
+     	alert("1111111");
+     
+     },
+     beforeShowForm:function(formid){
+     	alert("22222");
+     }
      });
      jQuery("#jsonmap").jqGrid('navGrid','#gridpager',{del:true,add:true,edit:true},{},{},{},{multipleSearch:true});
      /*
@@ -193,6 +201,13 @@ $(document).ready(function(){
     	alert("11111111");
     
     }
+    $("#hid").click(function(){
+    	//alert("1111");
+    	//jQuery.jgrid.setGridParam();
+    	jQuery("#jsonmap").setGridParam({}).hideCol("operate").trigger("reloadGrid");
+    	
+    
+    });
 
  });   
 </script>
@@ -202,5 +217,6 @@ $(document).ready(function(){
 <table id="jsonmap"></table>
 <div id="gridpager"></div>
 <input type="button" id="ed" value="edit clum" /> 
+<input type="button" id="hid" value="hidden clum" /> 
 </body>
 </html>
