@@ -34,14 +34,15 @@ $(document).ready(function(){
       url:'jsonlist.do?method=exec',  
       //url:WEB_PATH+'/excludes/post.jsp',   
       datatype: 'json',    
-      colNames:['编号','注册名称','密码','真实姓名','地址','电子邮件'],    
+      colNames:['编号','注册名称','密码','真实姓名','地址','电子邮件','操作'],    
       colModel:[    
-               {name:'id',index:'id', width:90,sorttype:"int",editable:false, editoptions:{readonly:false}},    
+               {name:'id',index:'id', width:90,sorttype:"int",editable:false, editoptions:{readonly:false},formatter:formatid},    
                {name:'username',index:'username', width:110,editable:true, editoptions:{readonly:false}},    
                {name:'password',index:'password', width:80,editable:true, editoptions:{readonly:false}},    
                {name:'name',index:'name', width:80,editable:true, editoptions:{readonly:false}},      
                {name:'addr',index:'addr', width:80,editable:true, editoptions:{readonly:false}},     
-               {name:'email',index:'email', width:80,editable:true, editoptions:{readonly:false}}      
+               {name:'email',index:'email', width:80,editable:true, editoptions:{readonly:false}},
+               {name:'operate',index:'opr', width:80,formatter:hrefValue}      
               ],    
          
     // imgpath: WEB_PATH+'/resources/javascript/plugins/jqgrid/css/smoothness/images',    
@@ -174,6 +175,24 @@ $(document).ready(function(){
     $("#ed").click(function(){
     	jQuery("#jsonmap").jqGrid('columnChooser');
     });
+
+    function hrefValue(cellvalue, options, rowObject){
+    //alert(rowObject.id);
+    	cellvalue="操作";
+    	//return cellvalue;
+    	return "<a href='#' onclick='viewHeader();return false;' >" +cellvalue+"</a>";
+    }
+    function formatid(cellvalue, options, rowObject){
+    	//alert(options);
+    	cellvalue="#"+cellvalue;
+    	return cellvalue;
+    	//return "<a href='#' onclick='viewHeader();return false;' >" +cellvalue+"</a>";
+    }
+    
+	function viewHeader(){
+    	alert("11111111");
+    
+    }
 
  });   
 </script>
