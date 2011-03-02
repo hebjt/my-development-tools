@@ -1,51 +1,50 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN"
-    "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+<?xml version="1.0" encoding="GBK"?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd" >
 
 <sqlMap namespace="user">
 
 	<typeAlias alias="user" type="cuijingtao.grid.domain.User" />
 	<typeAlias alias="card" type="cuijingtao.grid.domain.CardInfo" />
-
-	<select id="getAllUser" resultClass="java.util.HashMap" parameterClass="user" remapResults="true">
-		select id,username,password,name,phone,email,addr
-		from user
-		
-		LIMIT #currPage#,#pageSize#
-		
-    </select>
-    
-    <select id="getUserCount" resultClass="int" parameterClass="user">
-		SELECT COUNT(*)
-		FROM user
-		
-		
-   </select>
-   <insert id="addUser" parameterClass="user">
-   	insert into user(username,password,name,phone,email,addr)
-   	values(#username#,#password#,#name#,#phone#,#email#,#addr#)
-   
-   </insert>
-   <update id="editUser" parameterClass="user">
-   	update user
-   	set username=#username#,password=#password#,name=#name#,phone=#phone#,email=#email#,addr=#addr#
-   	where id=#id#
-   	
-   </update>
-   
-   	<select id="getCardInfo" resultClass="java.util.HashMap" parameterClass="card" remapResults="true">
-		select cardno,cardname,cardfrom,cardstate
-		from cardinfo
-		where parentid=#parentid#
-		LIMIT #currPage#,#pageSize#
-		
-    </select>
-    <select id="getCardCount" resultClass="int" parameterClass="card">
-		SELECT COUNT(*)
-		FROM cardinfo
-		where parentid=#parentid#
-		
-		
-   </select>
+  <resultMap id="contractMap" class="java.util.HashMap">	
+  	<result column="username" property="username" jdbcType="VARCHAR2" javaType="java.lang.String"/>
+    <result column="password" property="password" jdbcType="VARCHAR2" javaType="java.lang.String"/>
+    <result column="addr" property="addr" jdbcType="VARCHAR2" javaType="java.lang.String"/>
+    <result column="phone" property="phone" jdbcType="VARCHAR2" javaType="java.lang.String"/>
+    <result column="email" property="email" jdbcType="VARCHAR2" javaType="java.lang.String"/>
+    <result column="name" property="name" jdbcType="VARCHAR2" javaType="java.lang.String"/>
+    <result column="level1" property="level" jdbcType="VARCHAR2" javaType="java.lang.String"/>
+    <result column="state1" property="state" jdbcType="VARCHAR2" javaType="java.lang.String"/>
+  </resultMap>
   
+ <resultMap id="conMap" class="cuijingtao.grid.domain.Page">	
+    <result column="record_count" property="records" jdbcType="NUMBER" javaType="java.lang.Integer"/>
+    <result column="page_count" property="pageCount" jdbcType="NUMBER" javaType="java.lang.Integer"/>
+  </resultMap>
+  
+ <parameterMap class="java.util.Map" id="funParam">
+  	<parameter property="result" jdbcType="ORACLECURSOR" javaType="java.sql.ResultSet" mode="OUT" resultMap="contractMap"/>
+  	<parameter property="fieldList" jdbcType="VARCHAR2" javaType="java.lang.String" mode="IN"/>
+  	<parameter property="tableName" jdbcType="VARCHAR2" javaType="java.lang.String" mode="IN"/>
+  	<parameter property="queryCondition" jdbcType="VARCHAR2" javaType="java.lang.String" mode="IN"/>
+  	<parameter property="orderList" jdbcType="VARCHAR2" javaType="java.lang.String" mode="IN"/>
+  	<parameter property="eachCount" jdbcType="NUMBER" javaType="java.lang.Integer" mode="IN"/>
+  	<parameter property="pageNumber" jdbcType="NUMBER" javaType="java.lang.Integer" mode="IN"/>
+  	<parameter property="fieldOrder" jdbcType="NUMBER" javaType="java.lang.Integer" mode="IN"/>
+  	<parameter property="fieldSc" jdbcType="VARCHAR2" javaType="java.lang.String" mode="IN"/>
+  </parameterMap>
+  <parameterMap class="java.util.Map" id="funParamcount">
+  	<parameter property="result" jdbcType="ORACLECURSOR" javaType="java.sql.ResultSet" mode="OUT" resultMap="conMap"/>
+  	<parameter property="tableName" jdbcType="VARCHAR2" javaType="java.lang.String" mode="IN"/>
+  	<parameter property="queryCondition" jdbcType="VARCHAR2" javaType="java.lang.String" mode="IN"/>
+  	<parameter property="eachCount" jdbcType="NUMBER" javaType="java.lang.Integer" mode="IN"/>
+  </parameterMap>
+  
+  <procedure id="getFuncData" parameterMap="funParam" resultMap="contractMap" remapResults="true">
+  	  {? = call pkg_list_business.get_page_by_number(?,?,?,?,?,?,?,?)}
+  </procedure>
+  <procedure id="getFuncDataCount" parameterMap="funParamcount" resultMap="conMap" remapResults="true">
+  	  {? = call pkg_list_business.get_total_info(?,?,?)}
+  </procedure>
+	
+   
 </sqlMap>

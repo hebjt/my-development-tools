@@ -49,7 +49,7 @@ public class CardAction extends DispatchAction {
 		
 		String pid = request.getParameter("pid");
 		card.setParentid(Integer.parseInt(pid));
-		int records = userver.getCardCount(card); // 记录总数
+		//int records = userver.getCardCount(card); // 记录总数
 		//System.out.println("***************"+order);
 		int total_pages = 0;
 		int limit = Integer.parseInt(rows);
@@ -57,6 +57,7 @@ public class CardAction extends DispatchAction {
 
 		
 		// 计算分页参数
+		/*
 		if (records > 0) {
 			total_pages = (int) Math.ceil(records / limit) + 1;
 		}
@@ -64,28 +65,28 @@ public class CardAction extends DispatchAction {
 			t_page = total_pages;
 		}
 		int start = limit * t_page - limit;
-		
-		card.setCurrPage(start);
+		*/
+		//card.setCurrPage(start);
 		card.setPageSize(limit);
 		card.setParentid(Integer.parseInt(pid));
 		//user.setOrder(order);
 		//user.setSort(sort);
 
-		Map map = userver.getCardInfo(card);
+		//Map map = userver.getCardInfo(card);
 
-		List jsonCard = (List) map.get("ResultSet");
+		//List jsonCard = (List) map.get("ResultSet");
 
 		// Object jsonArray = jsonUser.toArray();
 		// String str = JSONObject.fromObject(jsonUser).toString();
 		JSONObject jsonObject = new JSONObject();
-		Object[] obj = jsonCard.toArray();
-		String str = JsonUtil.toJson(obj);
+		//Object[] obj = jsonCard.toArray();
+		//String str = JsonUtil.toJson(obj);
 
 		jsonObject.put("total", total_pages);
 		jsonObject.put("currpage", t_page);
-		jsonObject.put("records", records);
+		//jsonObject.put("records", records);
 		jsonObject.put("rows", rows);
-		jsonObject.put("subgrid", str);
+		//jsonObject.put("subgrid", str);
 		/*
 		 * 
 		 * 手动拼接json字符串
