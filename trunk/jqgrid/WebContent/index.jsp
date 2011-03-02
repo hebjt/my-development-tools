@@ -34,9 +34,8 @@ $(document).ready(function(){
       url:'jsonlist.do?method=exec',  
       //url:WEB_PATH+'/excludes/post.jsp',   
       datatype: 'json',    
-      colNames:['编号','注册名称','密码','真实姓名','地址','电子邮件','操作'],    
-      colModel:[    
-               {name:'id',index:'id', width:90,sorttype:"int",editable:false, editoptions:{readonly:false},formatter:formatid},    
+      colNames:['注册名称','密码','真实姓名','地址','电子邮件','操作'],    
+      colModel:[        
                {name:'username',index:'username', width:110,editable:true, editoptions:{readonly:false}},    
                {name:'password',index:'password', width:80,editable:true, editoptions:{readonly:false}},    
                {name:'name',index:'name', width:80,editable:true, editoptions:{readonly:false}},

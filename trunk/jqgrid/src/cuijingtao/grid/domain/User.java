@@ -4,25 +4,20 @@ import org.apache.struts.action.ActionForm;
 
 @SuppressWarnings("serial")
 public class User extends ActionForm {
-	private int id;
+	
 	private String username;
 	private String password;
 	private String phone;
 	private String name;
 	private String addr;
 	private String email;
-	private int currPage;
-	private int pageSize;
+	private int PageCount;
+	private int records;
 	private String sort;
 	private String order;
 	
 	
-	public int getId() {
-		return id;
-	}
-	public void setId(int id) {
-		this.id = id;
-	}
+	
 	public String getUsername() {
 		return username;
 	}
@@ -59,18 +54,6 @@ public class User extends ActionForm {
 	public void setEmail(String email) {
 		this.email = email;
 	}
-	public int getCurrPage() {
-		return currPage;
-	}
-	public void setCurrPage(int currPage) {
-		this.currPage = currPage;
-	}
-	public int getPageSize() {
-		return pageSize;
-	}
-	public void setPageSize(int pageSize) {
-		this.pageSize = pageSize;
-	}
 	public String getOrder() {
 		return order;
 	}
@@ -82,6 +65,18 @@ public class User extends ActionForm {
 	}
 	public void setSort(String sort) {
 		this.sort = sort;
+	}
+	public int getPageCount() {
+		return PageCount;
+	}
+	public void setPageCount(int pageCount) {
+		PageCount = pageCount;
+	}
+	public int getRecords() {
+		return records;
+	}
+	public void setRecords(int records) {
+		this.records = records;
 	}
 	
 	

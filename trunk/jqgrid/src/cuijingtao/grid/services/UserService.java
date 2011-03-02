@@ -1,12 +1,13 @@
 package cuijingtao.grid.services;
 
+import java.util.List;
 import java.util.Map;
 
 import com.ibatis.dao.client.DaoManager;
 
 import cuijingtao.grid.dao.UserDaoConfig;
 import cuijingtao.grid.dao.iface.UserDAO;
-import cuijingtao.grid.domain.CardInfo;
+import cuijingtao.grid.domain.Page;
 import cuijingtao.grid.domain.User;
 
 public class UserService {
@@ -21,27 +22,11 @@ public class UserService {
 		this.userDao=userDao;
 	}
 	
-	@SuppressWarnings("rawtypes")
-	public Map getAllUser(User user){
-		return userDao.getAllUser(user);
+	public List<User> getUserList(Map map){
+		return userDao.getContractList(map);
 	}
-	public int getCount(){
-		return userDao.getUserCount();
-	}
-	
-	public void addUser(User user){
-		userDao.addUser(user);
-	}
-	public void editUser(User user){
-		userDao.editUser(user);
-	}
-	
-	public Map getCardInfo(CardInfo card){
-		return userDao.getCardInfo(card);
-	}
-	
-	public int getCardCount(CardInfo card){
-		return userDao.getCardCount(card);
+	public List<Page> getUserCount(Map map){
+		return userDao.getContractNum(map);
 	}
 	
 }
