@@ -1,0 +1,162 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.0.xsd">
+
+	<!-- DataSource -->
+	<!--bean id="dataSource"
+		class="org.springframework.jdbc.datasource.DriverManagerDataSource"-->
+	<bean id="dataSource"
+		class="org.apache.commons.dbcp.BasicDataSource"
+		destroy-method="close">
+		<property name="driverClassName"
+			value="oracle.jdbc.driver.OracleDriver">
+		</property>
+		<property name="url"
+			value="jdbc:oracle:thin:@192.168.100.251:1521:cstar">
+		</property>
+		<property name="username" value="ticket"></property>
+		<property name="password" value="ticket"></property>
+	</bean>
+	<!-- SessionFactory -->
+	<bean id="sessionFactory"
+		class="org.springframework.orm.hibernate3.LocalSessionFactoryBean">
+		<property name="dataSource">
+			<ref bean="dataSource" />
+		</property>
+		<!-- add *.hbm.xml -->
+		<property name="mappingResources">
+			<list>
+				<value>test/po/Test.hbm.xml</value>
+				<value>airticket/po/Airorder.hbm.xml</value>
+				<value>airticket/po/DromeCode.hbm.xml</value>
+				<value>airticket/po/Userinfo.hbm.xml</value>
+				<value>airticket/po/Userscore.hbm.xml</value>
+			</list>
+		</property>
+
+		<property name="hibernateProperties">
+			<props>
+				<prop key="hibernate.dialect">
+					org.hibernate.dialect.Oracle9Dialect
+				</prop>
+				<prop key="hibernate.show_sql">true</prop>
+			</props>
+		</property>
+	</bean>
+
+	<!--bean id="transactionManager"
+		class="org.springframework.transaction.jta.JtaTransactionManager" /-->
+
+	<bean id="transactionManager "
+		class="org.springframework.orm.hibernate3.HibernateTransactionManager">
+		<property name="sessionFactory" ref="sessionFactory" />
+	</bean>
+
+
+	<!--事务拦截器-->
+	<bean id="transactionInterceptor"
+		class="org.springframework.transaction.interceptor.TransactionInterceptor">
+		<property name="transactionManager">
+			<ref bean="transactionManager" />
+		</property>
+		<property name="transactionAttributes">
+			<props>
+				<!-- key表示匹配DAO中的方法名，例如：save*表示所有前缀为save的方法 -->
+				<prop key="save*">PROPAGATION_REQUIRED</prop>
+				<prop key="find*">PROPAGATION_REQUIRED,readOnly</prop>
+				<prop key="delete*">PROPAGATION_REQUIRED</prop>
+				<prop key="update*">PROPAGATION_REQUIRED</prop>
+			</props>
+		</property>
+	</bean>
+
+	<!-- 自动代理 -->
+	<bean id="autoproxy"
+		class="org.springframework.aop.framework.autoproxy.BeanNameAutoProxyCreator">
+		<!-- 可以是Service或DAO层（最好是针对业务层*Service） -->
+		<property name="beanNames">
+			<list>
+				<value>*Service</value>
+			</list>
+		</property>
+		<property name="interceptorNames">
+			<list>
+				<value>transactionInterceptor</value>
+			</list>
+		</property>
+	</bean>
+
+	<bean name="testService" class="test.service.TestService">
+		<property name="testDAO">
+			<bean class="test.dao.TestDAO">
+				<property name="sessionFactory" ref="sessionFactory" />
+			</bean>
+		</property>
+	</bean>
+
+	<bean id="TestAction" class="test.action.TestAction"
+		scope="prototype">
+		<property name="testService" ref="testService"></property>
+	</bean>
+
+	<bean name="airTicketOprService"
+		class="airticket.service.AirTicketOprService">
+		<property name="serviceSoapProxy">
+			<bean class="webservicesclient._ServiceSoapProxy"></bean>
+		</property>
+		<property name="airOrderDAO">
+			<bean class="airticket.dao.AirorderDAO">
+				<property name="sessionFactory" ref="sessionFactory" />
+			</bean>
+		</property>
+	</bean>
+
+	<bean id="AirTicketOprAction"
+		class="airticket.action.AirTicketOprAction" scope="prototype">
+		<property name="airTicketOprService"
+			ref="airTicketOprService">
+		</property>
+	</bean>
+
+	<bean name="airTicketListService"
+		class="airticket.service.AirTicketListService">
+		<property name="serviceSoapProxy">
+			<bean class="webservicesclient._ServiceSoapProxy"></bean>
+		</property>
+		<property name="airOrderDAO">
+			<bean class="airticket.dao.AirorderDAO">
+				<property name="sessionFactory" ref="sessionFactory" />
+			</bean>
+		</property>
+		<property name="dromeCodeDAO">
+			<bean class="airticket.dao.DromeCodeDAO">
+				<property name="sessionFactory" ref="sessionFactory" />
+			</bean>
+		</property>
+	</bean>
+
+	<bean id="AirTicketListAction"
+		class="airticket.action.AirTicketListAction" scope="prototype">
+		<property name="airTicketListService"
+			ref="airTicketListService">
+		</property>
+	</bean>
+	
+	<bean name="userOprService"
+		class="airticket.service.UserOprService">
+		<property name="userinfoDAO">
+			<bean class="airticket.dao.UserinfoDAO">
+				<property name="sessionFactory" ref="sessionFactory" />
+			</bean>
+		</property>
+	</bean>
+
+	<bean id="UserOprAction"
+		class="airticket.action.UserOprAction" scope="prototype">
+		<property name="userOprService"
+			ref="userOprService">
+		</property>
+	</bean>
+	
+</beans>

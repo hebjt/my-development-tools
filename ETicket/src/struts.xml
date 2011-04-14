@@ -1,0 +1,46 @@
+<!DOCTYPE struts PUBLIC
+        "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+        "http://struts.apache.org/dtds/struts-2.0.dtd">
+<struts>
+	<include file="struts-default.xml" />
+
+	<!--package name="register" extends="struts-default">
+		<action name="register" class="RegisterAction">
+		<result>Login.jsp</result>
+		<result name="input">error.jsp</result>
+		</action>
+		</package-->
+	<package name="test" extends="struts-default">
+		<action name="testAction" class="TestAction">
+			<result>index.jsp</result>
+			<result name="input">error.jsp</result>
+		</action>
+	</package>
+	<package name="eticket" extends="struts-default">
+		<global-exception-mappings>
+			<exception-mapping result="input"
+				exception="java.lang.Exception">
+			</exception-mapping>
+		</global-exception-mappings>
+		<action name="airTicketOprAction" class="AirTicketOprAction">
+			<result name="order">airticket/airticketorder.jsp</result>
+			<result name="input">error.jsp</result>
+			
+		</action>
+		<action name="airTicketListAction" class="AirTicketListAction">
+			<result>airticket/airticketquery.jsp</result>
+			<result name="airticketlist">airticket/airticketlist.jsp</result>
+			<result name="detail">airticket/airticketdetail.jsp</result>
+			<result name="input">error.jsp</result>
+			
+		</action>
+		<action name="userOprAction" class="UserOprAction">
+			<result>airticket/register.jsp</result>
+			<result name="userinfo">airticket/userinfo.jsp</result>
+			<result name="loginPage">airticket/login.jsp</result>
+			<result name="login">airticket/userinfo.jsp</result>
+			<result name="input">error.jsp</result>
+			
+		</action>
+	</package>
+</struts>
