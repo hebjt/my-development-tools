@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- namespace名字必须与Mapper接口名一致 -->
+
+<mapper namespace="com.tangce.user.mappers.UserMapper">
+
+	<resultMap type="com.tangce.user.domain.User" id="userMap">
+		<id property="id" column="id" />
+		<result property="name" column="name" />
+		<result property="password" column="password" />
+		<result property="email" column="email" />
+		<result property="state" column="state"/>
+		<result property="level" column="level" />
+	</resultMap>
+	
+	<select id="findUser" resultType="com.tangce.user.domain.User" parameterType="String">
+		select * from user where name=#{name}
+	</select>
+	<insert id="insertUser" parameterType="com.tangce.user.domain.User">
+		insert into user(name,password) values(#{name},#{password})
+	</insert>
+	
+	<select id="findAllUser" resultMap="userMap" parameterType="com.tangce.user.domain.User">
+		select * from user limit #{currPage},#{pageSize}
+	</select>
+	
+	<select id="findCountAllUser" resultType="_int">
+		select count(*) from user
+	</select>
+	<delete id="delUserById" parameterType="com.tangce.user.domain.User">
+		delete from user where id=#{id}
+	</delete>
+	<select id="findUserById" resultType="com.tangce.user.domain.User" parameterType="_int">
+		select * from user where id=#{id}
+	</select>
+	<update id="updateUser" parameterType="com.tangce.user.domain.User">
+		update user set name=#{name},password=#{password},state=#{state}
+		where id=#{id}
+	</update>
+	
+</mapper>
