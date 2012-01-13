@@ -20,7 +20,7 @@ import org.springframework.web.servlet.ModelAndView;
 import com.tangce.user.domain.User;
 import com.tangce.user.services.UserService;
 @Controller
-@RequestMapping("/user/*")
+@RequestMapping("/user/")
 public class UserAction {
 	protected static Logger logger = Logger.getLogger("useraction");  
 	@Autowired
@@ -31,7 +31,7 @@ public class UserAction {
 		List<User> list = (List<User>) userMap.get("ResultSet");
 		
 		model.addAttribute("list",list);
-		logger.info("ɾ��............");
+		logger.info("login..........");
 		String target="";
 		target="user/index";
 		return target;
