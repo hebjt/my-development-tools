@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "mybatis-3-mapper.dtd" >
+<mapper namespace="com.tanghsk.mock.admin.exam.mapper.ExamPaperPublishMapper" >
+  <resultMap id="BaseResultMap" type="publish" >
+    <id column="publish_id" property="publishId" jdbcType="VARCHAR" />
+    <result column="paper_id" property="paperId" jdbcType="VARCHAR" />
+    <result column="paper_pub_status_id" property="paperPubStatusId" jdbcType="VARCHAR" />
+    <result column="publish_name" property="publishName" jdbcType="VARCHAR" />
+    <result column="publish_paper_price" property="publishPaperPrice" jdbcType="REAL" />
+    <result column="publish_time" property="publishTime" jdbcType="TIMESTAMP" />
+    <result column="publish_type" property="publishType" jdbcType="VARCHAR" />
+    <result column="publish_have_parse" property="publishHaveParse" jdbcType="CHAR" />
+    <result column="publish_have_read" property="publishHaveRead" jdbcType="CHAR" />
+    <result column="publish_point_num" property="publishPointNum" jdbcType="INTEGER" />
+    <result column="publish_buy_times" property="publishBuyTimes" jdbcType="INTEGER" />
+    <result column="publish_remark" property="publishRemark" jdbcType="VARCHAR" />
+  </resultMap>
+  <resultMap type="publishstatus" id="typestatus">
+  	<id column="paper_pub_status_id" property="paperPubStatusId" jdbcType="VARCHAR" />
+    <result column="paper_pub_status_name" property="paperPubStatusName" jdbcType="VARCHAR" />
+    <result column="paper_pub_status_remark" property="paperPubStatusRemark" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    publish_id, paper_id, paper_pub_status_id, publish_name, publish_paper_price, publish_time, 
+    publish_type, publish_have_parse, publish_have_read, publish_point_num, publish_buy_times, 
+    publish_remark
+  </sql>
+  <!-- 初始化数据列表 -->
+  <select id="findListPageAll" resultMap="BaseResultMap">
+  	select <include refid="Base_Column_List" />
+  	from exam_paper_publish
+  	where paper_pub_status_id !=0
+  </select>
+  <select id="loadPublishById" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from exam_paper_publish
+    where publish_id = #{publishId,jdbcType=VARCHAR}
+  </select>
+  <!-- 根据试卷id查询试卷发布列表 -->
+  <select id="getPaperListByPaperId" resultMap="BaseResultMap" parameterType="java.lang.String" >
+  	 select 
+    <include refid="Base_Column_List" />
+    from exam_paper_publish
+    where paper_id = #{paper_id,jdbcType=VARCHAR}
+  </select>
+  
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" flushCache="true" >
+    delete from exam_paper_publish
+    where publish_id = #{publishId,jdbcType=VARCHAR}
+  </delete>
+
+  <insert id="savePlublish" parameterType="publish" >
+    insert into exam_paper_publish
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      publish_id,
+      paper_id,
+      paper_pub_status_id,
+      publish_name,
+      publish_paper_price,
+      publish_time,
+      publish_type,
+      publish_have_parse,
+      publish_have_read,
+      publish_point_num,
+      publish_buy_times,
+      publish_remark,
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      #{publishId,jdbcType=VARCHAR},
+      #{paperId,jdbcType=VARCHAR},
+      #{paperPubStatusId,jdbcType=VARCHAR},
+      #{publishName,jdbcType=VARCHAR},
+      #{publishPaperPrice,jdbcType=REAL},
+      #{publishTime,jdbcType=TIMESTAMP},
+      #{publishType,jdbcType=VARCHAR},
+      #{publishHaveParse,jdbcType=CHAR},
+      #{publishHaveRead,jdbcType=CHAR},
+      #{publishPointNum,jdbcType=INTEGER},
+      #{publishBuyTimes,jdbcType=INTEGER},
+      #{publishRemark,jdbcType=VARCHAR},
+    </trim>
+  </insert>
+  <update id="updatePublishById" parameterType="publish" >
+    update exam_paper_publish
+    <set >
+      <if test="paperId != null" >
+        paper_id = #{paperId,jdbcType=VARCHAR},
+      </if>
+      <if test="paperPubStatusId != null" >
+        paper_pub_status_id = #{paperPubStatusId,jdbcType=VARCHAR},
+      </if>
+      <if test="publishName != null" >
+        publish_name = #{publishName,jdbcType=VARCHAR},
+      </if>
+      <if test="publishPaperPrice != null" >
+        publish_paper_price = #{publishPaperPrice,jdbcType=REAL},
+      </if>
+      <if test="publishTime != null" >
+        publish_time = #{publishTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="publishType != null" >
+        publish_type = #{publishType,jdbcType=VARCHAR},
+      </if>
+      <if test="publishHaveParse != null" >
+        publish_have_parse = #{publishHaveParse,jdbcType=CHAR},
+      </if>
+      <if test="publishHaveRead != null" >
+        publish_have_read = #{publishHaveRead,jdbcType=CHAR},
+      </if>
+      <if test="publishPointNum != null" >
+        publish_point_num = #{publishPointNum,jdbcType=INTEGER},
+      </if>
+      <if test="publishBuyTimes != null" >
+        publish_buy_times = #{publishBuyTimes,jdbcType=INTEGER},
+      </if>
+      <if test="publishRemark != null" >
+        publish_remark = #{publishRemark,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where publish_id = #{publishId,jdbcType=VARCHAR}
+  </update>
+</mapper>

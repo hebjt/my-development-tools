@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "mybatis-3-mapper.dtd" >
+<mapper namespace="com.tanghsk.mock.admin.exam.mapper.ExamQuestionParseMapper" >
+  <resultMap id="ParseResultMap" type="parse" >
+    <id column="parse_id" property="parseId" jdbcType="VARCHAR" />
+    <result column="ques_id" property="quesId" jdbcType="VARCHAR" />
+    <result column="parse_type" property="parseType" jdbcType="VARCHAR" />
+    <result column="parse_file" property="parseFile" jdbcType="VARCHAR" />
+    <result column="parse_width" property="parseWidth" jdbcType="INTEGER" />
+    <result column="parse_height" property="parseHeight" jdbcType="INTEGER" />
+    <result column="parse_state" property="parseState" jdbcType="VARCHAR" />
+    <result column="paper_id" property="paperId" jdbcType="VARCHAR" />
+    <result column="struct_id" property="structId" jdbcType="VARCHAR" />
+  </resultMap>
+   <resultMap id="ResultMapWithBLOBs" type="parse" extends="ParseResultMap" >
+    <result column="parse_content" property="parseContent" jdbcType="LONGVARCHAR" />
+  </resultMap>
+  
+  <sql id="Base_Column_List" >
+    parse_id, ques_id, parse_type, parse_content, parse_file, parse_width, parse_height, 
+    parse_state,paper_id,struct_id
+  </sql>
+  <select id="getParseById" resultMap="ResultMapWithBLOBs" parameterType="string" >
+    select 
+    <include refid="Base_Column_List" />
+    from exam_question_parse
+    where parse_id = #{parseId,jdbcType=VARCHAR}
+  </select>
+  <!-- 试卷及解析列表 -->
+
+  <delete id="deleteParse" parameterType="java.lang.String">
+    delete from exam_question_parse
+    where parse_id = #{parseId,jdbcType=VARCHAR}
+  </delete>
+
+  <insert id="saveParse" parameterType="parse">
+    insert into exam_question_parse
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      parse_id,
+      ques_id,
+      parse_type,
+      parse_content,
+      parse_file,
+      parse_width,
+      parse_height,
+      parse_state,
+      paper_id,
+      struct_id,
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      #{parseId,jdbcType=VARCHAR},
+      #{quesId,jdbcType=VARCHAR},
+      #{parseType,jdbcType=VARCHAR},
+      #{parseContent,jdbcType=LONGVARCHAR},
+      #{parseFile,jdbcType=VARCHAR},
+      #{parseWidth,jdbcType=INTEGER},
+      #{parseHeight,jdbcType=INTEGER},
+      #{parseState,jdbcType=VARCHAR},
+      #{paperId,jdbcType=VARCHAR},
+      #{structId,jdbcType=VARCHAR},
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="parse" flushCache="true" >
+    update exam_question_parse
+    <set >
+      <if test="quesId != null" >
+        ques_id = #{quesId,jdbcType=VARCHAR},
+      </if>
+      <if test="parseType != null" >
+        parse_type = #{parseType,jdbcType=VARCHAR},
+      </if>
+      <if test="parseContent != null" >
+        parse_content = #{parseContent,jdbcType=VARCHAR},
+      </if>
+      <if test="parseFile != null" >
+        parse_file = #{parseFile,jdbcType=VARCHAR},
+      </if>
+      <if test="parseWidth != null" >
+        parse_width = #{parseWidth,jdbcType=INTEGER},
+      </if>
+      <if test="parseHeight != null" >
+        parse_height = #{parseHeight,jdbcType=INTEGER},
+      </if>
+      <if test="parseState != null" >
+        parse_state = #{parseState,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where parse_id = #{parseId,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="parse" flushCache="true" >
+    update exam_question_parse
+    set ques_id = #{quesId,jdbcType=VARCHAR},
+      parse_type = #{parseType,jdbcType=VARCHAR},
+      parse_content = #{parseContent,jdbcType=VARCHAR},
+      parse_file = #{parseFile,jdbcType=VARCHAR},
+      parse_width = #{parseWidth,jdbcType=INTEGER},
+      parse_height = #{parseHeight,jdbcType=INTEGER},
+      parse_state = #{parseState,jdbcType=VARCHAR}
+    where parse_id = #{parseId,jdbcType=VARCHAR}
+  </update>
+</mapper>

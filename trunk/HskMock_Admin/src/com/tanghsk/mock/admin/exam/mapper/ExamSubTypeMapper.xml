@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- namespace名字必须与Mapper接口名一致 -->
+
+<mapper namespace="com.tanghsk.mock.admin.exam.mapper.ExamSubTypeMapper">
+
+	<select id="getAllSubType" resultType="subType">
+		select * from exam_subject_type
+	</select>
+	
+	<select id="findSubTypeById" resultType="subType" parameterType="string">
+		select * from exam_subject_type where sub_type_id=#{subType_id}
+	</select>
+	
+	<select id="findSubTypeByName" resultType="subType" parameterType="string">
+		select * from exam_subject_type where sub_type_name=#{subType_name}
+	</select>
+	
+	<select id="findDupSubType" resultType="subType">
+		SELECT * FROM exam_subject_type WHERE 
+		<if test="findType=='edit'">
+			sub_type_name=#{subType.sub_type_name} AND
+			sub_type_id!=#{subType.sub_type_id}
+		</if>
+		
+		<if test="findType=='add'">
+			sub_type_id=#{subType.sub_type_id} OR 
+			sub_type_name=#{subType.sub_type_name}
+		</if>
+	</select>
+		
+	<insert id="addSubType" parameterType="subType">
+		INSERT INTO exam_subject_type(sub_type_id,sub_type_name,sub_type_remark)
+		VALUES(#{sub_type_id},#{sub_type_name},#{sub_type_remark}) 
+	</insert>
+
+	<update id="editSubType">
+		UPDATE exam_subject_type SET 
+		sub_type_id=#{sub_type_id},
+		sub_type_name=#{sub_type_name},
+		sub_type_remark=#{sub_type_remark} 
+		WHERE sub_type_id=#{sub_type_id}
+	</update>
+	
+	<delete id="delSubType" parameterType="subType">
+		DELETE FROM exam_subject_type WHERE sub_type_id=#{sub_type_id}
+	</delete>
+	
+	<select id="findSubjectByType" resultType="subject" parameterType="subject">
+		select * from exam_subject where subject_type=#{sub_type_id}
+	</select>
+</mapper>

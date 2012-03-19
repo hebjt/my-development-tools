@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- namespace名字必须与Mapper接口名一致 -->
+
+<mapper namespace="com.tanghsk.mock.admin.user.mapper.ExamUserMapper">
+
+
+<select id="findUserById" resultType="examUser" parameterType="examUser">
+		select * from exam_user where user_name=#{user_name}
+	</select>
+	<select id="findUserByModel" resultType="examUser" parameterType="examUser">
+		select * from exam_user where user_id=#{user_id}
+	</select>
+
+	<select id="getListPageUser" resultType="examUser" >
+		select * from exam_user  order by user_regtime desc
+	</select>
+	
+	<select id="getCountAllUser" resultType="_int">
+		select count(*) from exam_user
+	</select>
+
+	<insert id="addUser" parameterType="examUser">
+		insert into exam_user(user_id,user_name,user_cn_name,user_first_name,user_last_name,user_pass,user_realname,user_sex,user_birthday,user_birthday_type,user_phone,user_cellphone,user_email,user_address_type,user_address,user_address_detail,user_zip,user_regtime,user_last_login,user_last_update,user_id_type,user_id_number)
+		values(#{user_id},#{user_name},#{user_cn_name},#{user_first_name},#{user_last_name},#{user_pass},#{user_realname},#{user_sex},#{user_birthday},#{user_birthday_type},#{user_phone},#{user_cellphone},#{user_email},#{user_address_type},#{user_address},#{user_address_detail},#{user_zip},#{user_regtime},#{user_last_login},#{user_last_update},#{user_id_type},#{user_id_number}) 
+	</insert>
+	
+	<insert id="delUser" parameterType="examUser">
+		delete from exam_user where user_id=#{user_id}
+	</insert>
+	
+	<insert id="updateUser" parameterType="examUser">
+		update exam_user set user_name = #{user_name},user_first_name = #{user_first_name},user_last_name = #{user_last_name},user_realname = #{user_realname}
+		,user_sex = #{user_sex},user_birthday = #{user_birthday},user_birthday_type = #{user_birthday_type},user_phone = #{user_phone},user_cellphone = #{user_cellphone}
+		,user_email = #{user_email},user_address_type = #{user_address_type},user_address = #{user_address},user_address_detail = #{user_address_detail}
+		,user_zip = #{user_zip}
+		 where user_id = #{user_id}
+		
+	</insert>
+</mapper>

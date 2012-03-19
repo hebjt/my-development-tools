@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "mybatis-3-mapper.dtd" >
+<mapper namespace="com.tanghsk.mock.admin.exam.mapper.ExamQuestionTypeMapper" >
+  <resultMap id="BaseResultMap" type="com.tanghsk.mock.admin.exam.domain.ExamQuestionType" >
+    <id column="ques_type_id" property="quesTypeId" jdbcType="VARCHAR" />
+    <result column="ques_type_name" property="quesTypeName" jdbcType="VARCHAR" />
+    <result column="ques_type_remark" property="quesTypeRemark" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    ques_type_id, ques_type_name, ques_type_remark
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from exam_question_type
+    where ques_type_id = #{quesTypeId,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" flushCache="true" >
+    delete from exam_question_type
+    where ques_type_id = #{quesTypeId,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.tanghsk.mock.admin.exam.domain.ExamQuestionType" flushCache="true" >
+    insert into exam_question_type (ques_type_id, ques_type_name, ques_type_remark
+      )
+    values (#{quesTypeId,jdbcType=VARCHAR}, #{quesTypeName,jdbcType=VARCHAR}, #{quesTypeRemark,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.tanghsk.mock.admin.exam.domain.ExamQuestionType" flushCache="true" >
+    insert into exam_question_type
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      ques_type_id,
+      ques_type_name,
+      ques_type_remark,
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      #{quesTypeId,jdbcType=VARCHAR},
+      #{quesTypeName,jdbcType=VARCHAR},
+      #{quesTypeRemark,jdbcType=VARCHAR},
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.tanghsk.mock.admin.exam.domain.ExamQuestionType" flushCache="true" >
+    update exam_question_type
+    <set >
+      <if test="quesTypeName != null" >
+        ques_type_name = #{quesTypeName,jdbcType=VARCHAR},
+      </if>
+      <if test="quesTypeRemark != null" >
+        ques_type_remark = #{quesTypeRemark,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where ques_type_id = #{quesTypeId,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.tanghsk.mock.admin.exam.domain.ExamQuestionType" flushCache="true" >
+    update exam_question_type
+    set ques_type_name = #{quesTypeName,jdbcType=VARCHAR},
+      ques_type_remark = #{quesTypeRemark,jdbcType=VARCHAR}
+    where ques_type_id = #{quesTypeId,jdbcType=VARCHAR}
+  </update>
+</mapper>
