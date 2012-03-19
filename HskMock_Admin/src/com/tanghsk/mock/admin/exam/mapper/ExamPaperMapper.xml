@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "mybatis-3-mapper.dtd" >
+<mapper namespace="com.tanghsk.mock.admin.exam.mapper.ExamPaperMapper" >
+  <resultMap id="BaseResultMap" type="examPaper">
+    <id column="paper_id" property="paperId" jdbcType="VARCHAR" />
+    <result column="paper_name" property="paperName" jdbcType="VARCHAR" />
+    <result column="paper_listening_file" property="paperListeningFile" jdbcType="VARCHAR" />
+    <result column="paper_create_time" property="paperCreateTime" jdbcType="TIMESTAMP" />
+    <result column="paper_question_num" property="paperQuestionNum" jdbcType="INTEGER" />
+    <result column="paper_exam_time" property="paperExamTime" jdbcType="INTEGER" />
+    <result column="paper_notice" property="paperNotice" jdbcType="VARCHAR" />
+    <association property="subject" column="subject_id" javaType="subject">
+    	<id property="subject_id" column="subject_id"/>
+    	<result property="exam_status_id" column="exam_status_id"/>
+    	<result property="subject_name" column="subject_name"/>
+    	<result property="subjectType" column="subject_type"/>
+    	<result property="subject_question_num" column="subject_question_num"/>
+    	<result property="subject_paper_num" column="subject_paper_num"/>
+    	<result property="subject_remark" column="subject_remark"/>
+    </association>
+  </resultMap>
+  <sql id="Base_Column_List" >
+    paper_id, subject_id, paper_name, paper_listening_file, paper_create_time, paper_question_num, 
+    paper_exam_time, paper_notice
+  </sql>
+  <select id="findListPageAll" resultMap="BaseResultMap">
+  	select a.*,b.paper_id, b.paper_name, b.paper_listening_file, b.paper_create_time, b.paper_question_num, b.paper_exam_time, b.paper_notice
+  	from exam_paper b inner join exam_subject a on a.subject_id=b.subject_id
+  </select>
+  
+  <select id="findEPById" resultMap="BaseResultMap" parameterType="string">
+  	select a.*,b.paper_id, b.paper_name, b.paper_listening_file, b.paper_create_time, b.paper_question_num, b.paper_exam_time, b.paper_notice
+  	from exam_paper b inner join exam_subject a on a.subject_id=b.subject_id
+  	where b.paper_id=#{paper_id}
+  </select>
+  
+  <select id="findExamPaperById" resultMap="BaseResultMap" parameterType="string" >
+    select 
+    <include refid="Base_Column_List" />
+    from exam_paper
+    <if test="paperId!=null">
+    	where paper_id = #{paperId,jdbcType=VARCHAR}
+    </if>
+    
+  </select>
+  <delete id="delExamPaperById" parameterType="string" >
+    delete from exam_paper
+    where paper_id = #{paper_id,jdbcType=VARCHAR}
+  </delete>
+  <insert id="addExamPaper" parameterType="examPaper" >
+    insert into exam_paper (paper_id, subject_id, paper_name, 
+      paper_listening_file, paper_create_time, 
+      paper_question_num, paper_exam_time, paper_notice
+      )
+    values (#{paperId,jdbcType=VARCHAR}, #{subject.subject_id,jdbcType=VARCHAR}, #{paperName,jdbcType=VARCHAR}, 
+      #{paperListeningFile,jdbcType=VARCHAR}, #{paperCreateTime,jdbcType=TIMESTAMP}, 
+      #{paperQuestionNum,jdbcType=INTEGER}, #{paperExamTime,jdbcType=INTEGER}, #{paperNotice,jdbcType=VARCHAR}
+      )
+  </insert>
+  
+  <update id="updateExamPaper" parameterType="examPaper" >
+    update exam_paper
+    <set >
+      <if test="subject != null" >
+        subject_id = #{subject.subject_id,jdbcType=VARCHAR},
+      </if>
+      <if test="paperName != null" >
+        paper_name = #{paperName,jdbcType=VARCHAR},
+      </if>
+      <if test="paperListeningFile != null" >
+        paper_listening_file = #{paperListeningFile,jdbcType=VARCHAR},
+      </if>
+      <if test="paperCreateTime != null" >
+        paper_create_time = #{paperCreateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="paperQuestionNum != null" >
+        paper_question_num = #{paperQuestionNum,jdbcType=INTEGER},
+      </if>
+      <if test="paperExamTime != null" >
+        paper_exam_time = #{paperExamTime,jdbcType=INTEGER},
+      </if>
+      <if test="paperNotice != null" >
+        paper_notice = #{paperNotice,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where paper_id = #{paperId,jdbcType=VARCHAR}
+  </update>
+
+</mapper>

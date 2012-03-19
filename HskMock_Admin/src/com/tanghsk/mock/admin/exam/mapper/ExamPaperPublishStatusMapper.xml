@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "mybatis-3-mapper.dtd" >
+<mapper namespace="com.tanghsk.mock.admin.exam.domain.ExamPaperPublishStatus" >
+  <resultMap id="BaseResultMap" type="publishstatus" >
+    <id column="paper_pub_status_id" property="paperPubStatusId" jdbcType="VARCHAR" />
+    <result column="paper_pub_status_name" property="paperPubStatusName" jdbcType="VARCHAR" />
+    <result column="paper_pub_status_remark" property="paperPubStatusRemark" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    paper_pub_status_id, paper_pub_status_name, paper_pub_status_remark
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from exam_paper_publish_status
+    where paper_pub_status_id = #{paperPubStatusId,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" flushCache="true" >
+    delete from exam_paper_publish_status
+    where paper_pub_status_id = #{paperPubStatusId,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="publishstatus" flushCache="true" >
+    insert into exam_paper_publish_status (paper_pub_status_id, paper_pub_status_name, 
+      paper_pub_status_remark)
+    values (#{paperPubStatusId,jdbcType=VARCHAR}, #{paperPubStatusName,jdbcType=VARCHAR}, 
+      #{paperPubStatusRemark,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="publishstatus" flushCache="true" >
+    insert into exam_paper_publish_status
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      paper_pub_status_id,
+      paper_pub_status_name,
+      paper_pub_status_remark,
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      #{paperPubStatusId,jdbcType=VARCHAR},
+      #{paperPubStatusName,jdbcType=VARCHAR},
+      #{paperPubStatusRemark,jdbcType=VARCHAR},
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="publishstatus" flushCache="true" >
+    update exam_paper_publish_status
+    <set >
+      <if test="paperPubStatusName != null" >
+        paper_pub_status_name = #{paperPubStatusName,jdbcType=VARCHAR},
+      </if>
+      <if test="paperPubStatusRemark != null" >
+        paper_pub_status_remark = #{paperPubStatusRemark,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where paper_pub_status_id = #{paperPubStatusId,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="publishstatus" flushCache="true" >
+    update exam_paper_publish_status
+    set paper_pub_status_name = #{paperPubStatusName,jdbcType=VARCHAR},
+      paper_pub_status_remark = #{paperPubStatusRemark,jdbcType=VARCHAR}
+    where paper_pub_status_id = #{paperPubStatusId,jdbcType=VARCHAR}
+  </update>
+</mapper>

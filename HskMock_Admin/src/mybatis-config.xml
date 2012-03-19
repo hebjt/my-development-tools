@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Config 3.0//EN" "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+	<typeAliases>
+		<typeAlias alias="examUser" type="com.tanghsk.mock.admin.user.domain.ExamUser"/>
+		<typeAlias alias="subject" type="com.tanghsk.mock.admin.exam.domain.ExamSubject"/>
+		<typeAlias alias="subLevel" type="com.tanghsk.mock.admin.exam.domain.ExamSubjectLevel"/>
+		<typeAlias alias="subType" type="com.tanghsk.mock.admin.exam.domain.ExamSubType"/>
+		<typeAlias alias="examPaper" type="com.tanghsk.mock.admin.exam.domain.ExamPaper"/>
+		<typeAlias alias="subStru" type="com.tanghsk.mock.admin.exam.domain.ExamSubjectStruct"/>
+		<typeAlias alias="options" type="com.tanghsk.mock.admin.exam.domain.ExamOptions"/>
+		<typeAlias alias="questions" type="com.tanghsk.mock.admin.exam.domain.ExamQuestions"/>
+		<typeAlias alias="publish" type="com.tanghsk.mock.admin.exam.domain.ExamPaperPublish"/>
+		<typeAlias alias="publishstatus" type="com.tanghsk.mock.admin.exam.domain.ExamPaperPublishStatus"/>
+		<typeAlias alias="parse" type="com.tanghsk.mock.admin.exam.domain.ExamQuestionParse"/>
+	</typeAliases>
+	<plugins>
+		<plugin interceptor="com.tanghsk.plugin.PagePlugin">
+			<property name="dialect" value="mysql"/>
+			<property name="pageSqlId" value=".*ListPage.*"/>
+		</plugin>
+	</plugins>
+	<mappers>
+		<mapper resource="com/tanghsk/mock/admin/user/mapper/ExamUserMapper.xml" />
+		<mapper resource="com/tanghsk/mock/admin/exam/mapper/ExamSubjectMapper.xml" />
+		<mapper resource="com/tanghsk/mock/admin/exam/mapper/ExamSubjectLevelMapper.xml" />
+		<mapper resource="com/tanghsk/mock/admin/exam/mapper/ExamSubTypeMapper.xml" />
+		<mapper resource="com/tanghsk/mock/admin/exam/mapper/ExamPaperMapper.xml" />
+		<mapper resource="com/tanghsk/mock/admin/exam/mapper/ExamOptionsMapper.xml" />
+		<mapper resource="com/tanghsk/mock/admin/exam/mapper/ExamQuestionsMapper.xml" />
+		<mapper resource="com/tanghsk/mock/admin/exam/mapper/ExamPaperPublishMapper.xml" />
+		<mapper resource="com/tanghsk/mock/admin/exam/mapper/ExamPaperPublishStatusMapper.xml" />
+		<mapper resource="com/tanghsk/mock/admin/exam/mapper/ExamQuestionParseMapper.xml" />
+	</mappers>
+</configuration>	

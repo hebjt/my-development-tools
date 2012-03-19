@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- namespace名字必须与Mapper接口名一致 -->
+
+<mapper namespace="com.tanghsk.mock.admin.exam.mapper.ExamSubjectMapper">
+	<!-- 科目 -->
+	<resultMap id="BaseResultMap" type="subject">
+		<id column="subject_id" property="subject_id" jdbcType="VARCHAR" />
+		<result column="exam_status_id" property="exam_status_id" jdbcType="CHAR" />
+		<result column="subject_name" property="subject_name" jdbcType="VARCHAR" />
+		<result column="subject_question_num" property="subject_question_num" jdbcType="INTEGER" />
+		<result column="subject_paper_num" property="subject_paper_num" jdbcType="INTEGER" />
+		<result column="subject_remark" property="subject_remark" jdbcType="VARCHAR" />
+		<association property="subjectType" column="subject_type" javaType="subType" resultMap="subjectTypeMap" />
+		<association property="subjectLevel" column="subject_level_id" javaType="subLevel" resultMap="subjectLevelMap" />
+	</resultMap>
+  
+    <!-- 科目类别 -->
+    <resultMap type="subType" id="subjectTypeMap">
+    	<id property="sub_type_id" column="sub_type_id"/>
+    	<result property="sub_type_name" column="sub_type_name"/>
+    	<result property="sub_type_remark" column="sub_type_remark"/>
+    </resultMap>
+    <!-- 科目级别 -->
+	<resultMap id="subjectLevelMap" type="subLevel" >
+      <id column="subject_level_id" property="subjectLevelId" jdbcType="VARCHAR" />
+      <result column="subject_level_name" property="subjectLevelName" jdbcType="VARCHAR" />
+    </resultMap>
+  
+	<select id="getListPageSubject" resultMap="BaseResultMap">
+		select a.*,b.* from exam_subject a inner join exam_subject_type b on a.subject_type=b.sub_type_id
+	</select>
+	
+	<select id="getCountAllSubject" resultType="_int">
+		select count(*) from exam_subject
+	</select>
+	
+	<select id="findSubjectById" resultMap="BaseResultMap" parameterType="subject">
+		select a.*,b.* from exam_subject a inner join exam_subject_type b on a.subject_type=b.sub_type_id
+		where subject_id=#{subject_id}
+	</select>
+
+	<!-- 添加考试科目 -->
+   <insert id="addSubject" parameterType="subject" >
+      insert into exam_subject
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      subject_id,
+      exam_status_id,
+      subject_name,
+      subject_level_id,
+      subject_type,
+      subject_question_num,
+      subject_paper_num,
+      subject_remark,
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      #{subject_id,jdbcType=VARCHAR},
+      #{exam_status_id,jdbcType=CHAR},
+      #{subject_name,jdbcType=VARCHAR},
+      #{subjectLevel.subjectLevelId,jdbcType=VARCHAR},
+      #{subjectType.sub_type_id,jdbcType=VARCHAR},
+      #{subject_question_num,jdbcType=INTEGER},
+      #{subject_paper_num,jdbcType=INTEGER},
+      #{subject_remark,jdbcType=VARCHAR},
+    </trim>
+  </insert>
+	
+	<delete id="delSubject" parameterType="subject">
+		delete from exam_subject where subject_id=#{subject_id}
+	</delete>
+	
+	<update id="updateSubject" parameterType="subject">
+		update exam_subject 
+		<set>
+	      <if test="subject_id != null" >
+	        subject_id = #{subject_id,jdbcType=VARCHAR},
+	      </if>
+	      <if test="exam_status_id != null" >
+	        exam_status_id = #{exam_status_id,jdbcType=CHAR},
+	      </if>
+	      <if test="subject_name != null" >
+	        subject_name = #{subject_name,jdbcType=VARCHAR},
+	      </if>
+	      <if test="subject_type != null" >
+	        subject_type = #{subjectType.sub_type_id,jdbcType=TIMESTAMP},
+	      </if>
+	      <if test="subject_question_num != null" >
+	        subject_question_num = #{subject_question_num,jdbcType=INTEGER},
+	      </if>
+	      <if test="subject_paper_num != null" >
+	        subject_paper_num = #{subject_paper_num,jdbcType=INTEGER},
+	      </if>
+	      <if test="subject_remark != null" >
+	        subject_remark = #{subject_remark,jdbcType=VARCHAR},
+	      </if>
+	    </set>
+	    where subject_id=#{subject_id}
+	</update>
+</mapper>

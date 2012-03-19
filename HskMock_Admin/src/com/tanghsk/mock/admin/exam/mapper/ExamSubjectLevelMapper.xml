@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "mybatis-3-mapper.dtd" >
+<mapper namespace="com.tanghsk.mock.admin.exam.mapper.ExamSubjectLevelMapper" >
+  <resultMap id="BaseResultMap" type="subLevel" >
+    <id column="subject_level_id" property="subjectLevelId" jdbcType="VARCHAR" />
+    <result column="subject_level_name" property="subjectLevelName" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    subject_level_id, subject_level_name
+  </sql>
+  <!-- 获取所有科目级别数据  -->
+  <select id="getListPage" resultMap="BaseResultMap">
+  	    select 
+	    <include refid="Base_Column_List" />
+	    from exam_subject_level
+  </select>
+  <select id="getLevleById" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from exam_subject_level
+    where subject_level_id = #{subjectLevelId,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" flushCache="true" >
+    delete from exam_subject_level
+    where subject_level_id = #{subjectLevelId,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="subLevel" flushCache="true" >
+    insert into exam_subject_level (subject_level_id, subject_level_name)
+    values (#{subjectLevelId,jdbcType=VARCHAR}, #{subjectLevelName,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="subLevel" flushCache="true" >
+    insert into exam_subject_level
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      subject_level_id,
+      subject_level_name,
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      #{subjectLevelId,jdbcType=VARCHAR},
+      #{subjectLevelName,jdbcType=VARCHAR},
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="subLevel" flushCache="true" >
+    update exam_subject_level
+    <set >
+      <if test="subjectLevelName != null" >
+        subject_level_name = #{subjectLevelName,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where subject_level_id = #{subjectLevelId,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="subLevel" flushCache="true" >
+    update exam_subject_level
+    set subject_level_name = #{subjectLevelName,jdbcType=VARCHAR}
+    where subject_level_id = #{subjectLevelId,jdbcType=VARCHAR}
+  </update>
+</mapper>

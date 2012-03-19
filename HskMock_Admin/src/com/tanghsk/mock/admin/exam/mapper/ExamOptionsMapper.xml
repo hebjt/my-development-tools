@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "mybatis-3-mapper.dtd" >
+<mapper namespace="com.tanghsk.mock.admin.exam.mapper.ExamOptionsMapper" >
+  <resultMap id="BaseResultMap" type="options" >
+    <id column="opt_id" property="optId" jdbcType="VARCHAR" />
+    <result column="ques_id" property="quesId" jdbcType="VARCHAR" />
+    <result column="opt_seq_num" property="optSeqNum" jdbcType="VARCHAR" />
+    <result column="opt_content" property="optContent" jdbcType="VARCHAR" />
+    <result column="opt_paperId" property="optPaperId" jdbcType="VARCHAR" />
+    <result column="opt_structId" property="optStructId" jdbcType="VARCHAR" />
+    <result column="opt_typeId" property="optTypeId" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    opt_id, ques_id, opt_seq_num, replace(opt_content,'\r\n','') as opt_content
+  </sql>
+  <!--获取选项对象 -->
+  <select id="getOptionsById" resultMap="BaseResultMap" parameterType="options" >
+    select 
+    <include refid="Base_Column_List" />
+    from exam_options
+    where opt_id = #{optId,jdbcType=VARCHAR}
+  </select>
+  <!-- 获取某个试题下的选项集合 -->
+  <select id="getOptionsByQuesId" resultMap="BaseResultMap" parameterType="string">
+    select 
+    <include refid="Base_Column_List" />
+    from exam_options
+    where ques_id = #{ques_id,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteOption" parameterType="java.lang.String">
+    delete from exam_options
+    where opt_id = #{optId,jdbcType=VARCHAR}
+  </delete>
+
+  <insert id="saveOptions" parameterType="options">
+    insert into exam_options
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      opt_id,
+      ques_id,
+      opt_seq_num,
+      opt_paperId,
+      opt_structId,
+      opt_content,
+      opt_typeId,
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      #{optId,jdbcType=VARCHAR},
+      #{quesId,jdbcType=VARCHAR},
+      #{optSeqNum,jdbcType=VARCHAR},
+      #{optPaperId,jdbcType=VARCHAR},
+      #{optStructId,jdbcType=VARCHAR},
+      #{optContent,jdbcType=VARCHAR},
+      #{optTypeId,jdbcType=CHAR},
+    </trim>
+  </insert>
+  <update id="updateOption" parameterType="options">
+    update exam_options
+    <set >
+      <if test="quesId != null" >
+        ques_id = #{quesId,jdbcType=VARCHAR},
+      </if>
+      <if test="optSeqNum != null" >
+        opt_seq_num = #{optSeqNum,jdbcType=VARCHAR},
+      </if>
+      <if test="optPaperId != null" >
+        opt_paperId = #{optPaperId,jdbcType=VARCHAR},
+      </if>
+      <if test="optStructId != null" >
+        opt_structId = #{optStructId,jdbcType=VARCHAR},
+      </if>
+      <if test="optContent != null" >
+        opt_content = #{optContent,jdbcType=VARCHAR},
+      </if>
+      <if test="optTypeId != null" >
+        opt_typeId = #{optTypeId,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where opt_id = #{optId,jdbcType=VARCHAR}
+  </update>
+ 
+  
+
+</mapper>

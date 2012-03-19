@@ -1,0 +1,239 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "mybatis-3-mapper.dtd" >
+<mapper namespace="com.tanghsk.mock.admin.exam.mapper.ExamQuestionsMapper" >
+  
+  <resultMap id="BaseResultMap" type="questions" >
+    <id column="ques_id" property="quesId" jdbcType="VARCHAR" />
+    <result column="paper_id" property="paperId" jdbcType="VARCHAR" />
+    <result column="ques_type_id" property="quesTypeId" jdbcType="VARCHAR" />
+    <result column="ques_parent_id" property="quesParentId" jdbcType="VARCHAR" />
+    <result column="ques_title" property="quesTitle" jdbcType="VARCHAR" />
+    <result column="ques_start_time" property="quesStartTime" jdbcType="INTEGER" />
+    <result column="ques_end_time" property="quesEndTime" jdbcType="INTEGER" />
+    <result column="ques_question_num" property="quesQuestionNum" jdbcType="INTEGER" />
+    <result column="ques_type" property="quesType" jdbcType="CHAR" />
+    <result column="ques_num" property="quesNum" jdbcType="VARCHAR" />
+    <result column="ques_answer" property="quesAnswer" jdbcType="VARCHAR" />
+    <result column="ques_dry_sign" property="quesDrySign" jdbcType="VARCHAR" />
+    <result column="ques_example_sign" property="quesExampleSign" jdbcType="VARCHAR" />
+    <result column="ques_read_time" property="quesReadTime" jdbcType="INTEGER" />
+    <result column="ques_answer_time" property="quesAnswerTime" jdbcType="INTEGER" />
+    <result column="ques_opt_column" property="quesOptColumn" jdbcType="INTEGER" />
+    <result column="ques_drag_sign" property="quesDragSign" jdbcType="VARCHAR" />
+    <result column="ques_allow_char" property="quesAllowChar" jdbcType="VARCHAR" />
+    <result column="ques_listen_text" property="quesListenText" jdbcType="VARCHAR" />
+    <result column="subject_struct_id" property="subjectStructId" jdbcType="VARCHAR" />
+    <result column="ques_listen_url" property="quesListenUrl" jdbcType="VARCHAR" />
+    <collection property="questionParse" column="ques_id" resultMap="ParseResultMap"></collection>
+  </resultMap>
+  
+  <resultMap id="ResultMapWithBLOBs" type="questions" extends="BaseResultMap" >
+    <result column="ques_content" property="quesContent" jdbcType="LONGVARCHAR" />
+  </resultMap>
+  <!-- **************************************************************解析 -->
+  <resultMap id="ParseResultMap" type="parse" >
+    <id column="parse_id" property="parseId" jdbcType="VARCHAR" />
+    <result column="ques_id" property="quesId" jdbcType="VARCHAR" />
+    <result column="parse_type" property="parseType" jdbcType="VARCHAR" />
+    <result column="parse_content" property="parseContent" jdbcType="VARCHAR" />
+    <result column="parse_file" property="parseFile" jdbcType="VARCHAR" />
+    <result column="parse_width" property="parseWidth" jdbcType="INTEGER" />
+    <result column="parse_height" property="parseHeight" jdbcType="INTEGER" />
+    <result column="parse_state" property="parseState" jdbcType="VARCHAR" />
+    <result column="paper_id" property="paperId" jdbcType="VARCHAR" />
+    <result column="struct_id" property="structId" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    ques_id, paper_id, ques_type_id, ques_parent_id, ques_title, ques_start_time, ques_end_time, 
+    ques_question_num, ques_type, ques_num, ques_answer, ques_dry_sign, ques_example_sign, 
+    ques_read_time, ques_answer_time, ques_opt_column, ques_drag_sign, ques_allow_char, 
+    ques_listen_text,subject_struct_id,ques_listen_url
+  </sql>
+  <sql id="Blob_Column_List" >
+    replace(ques_content,'\r\n','') as ques_content
+  </sql>
+  <select id="getQuestionById" resultMap="ResultMapWithBLOBs" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from exam_questions
+    where ques_id = #{quesId,jdbcType=VARCHAR}
+    order by ques_num
+  </select>
+  <!-- 加载子试题 -->
+  <select id="getQuestionByParentId" resultMap="ResultMapWithBLOBs" parameterType="string">
+     select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from exam_questions
+    where ques_parent_id = #{ques_id,jdbcType=VARCHAR}
+  </select>
+  <!-- 加载某个科目结构下的试题列表 -->
+  <select id="getListObjectByStructId" resultMap="ResultMapWithBLOBs" parameterType="map" >
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from exam_questions 
+    where subject_struct_id = #{subjectStructId,jdbcType=VARCHAR}
+    UNION 
+	select opt_id as ques_id,'' as paper_id,opt_typeId as ques_type_id,ques_id as ques_parent_id,'' as ques_title,
+	       '' as ques_start_time,'' as ques_end_time,'' as ques_question_num,opt_typeId as ques_type, opt_seq_num as ques_num,
+	       '' as ques_answer, '' as ques_dry_sign, '' as ques_example_sign, 
+	       '' as ques_read_time, '' as ques_answer_time, '' as ques_opt_column, '' as ques_drag_sign, '' as ques_allow_char, 
+	       '' as ques_listen_text,opt_structId as subject_struct_id,'' as ques_listen_url,opt_content as ques_content
+	from exam_options
+	where opt_structId=#{struct_id,jdbcType=VARCHAR}
+	order by ques_num+0,ques_num
+  </select>
+  <!-- ×××××××××××××××××××××××××××××××××××××××××××××××××××××试题解析列表 -->
+  <select id="getQuestionParse" resultMap="ResultMapWithBLOBs" parameterType="questions">
+    select *
+    from exam_questions a
+    left join exam_question_parse b
+    on a.ques_id = b.ques_id
+    where a.ques_parent_id='root' and a.subject_struct_id=#{subjectStructId} and a.paper_id=#{paperId}
+    order by a.ques_num+0
+  </select>
+  <!-- 加载非综合题  获取批量添加的id-->
+  <select id="getIdForBatData" resultMap="ResultMapWithBLOBs" parameterType="map">
+  	select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from exam_questions 
+    where paper_id=#{paperId,jdbcType=VARCHAR} and subject_struct_id=#{structId,jdbcType=VARCHAR} 
+    and (ques_type_id=#{quesType1,jdbcType=VARCHAR} or ques_type_id=#{quesType2,jdbcType=VARCHAR})
+    and ques_dry_sign=#{drySign,jdbcType=VARCHAR}
+  </select>
+  <!-- 删除试题 -->
+  <delete id="deleteByQuesId" parameterType="java.lang.String" >
+    delete from exam_questions
+    where ques_id = #{ques_id,jdbcType=VARCHAR}
+  </delete>
+
+  <!-- 保存试题 -->
+  <insert id="saveQuestions" parameterType="questions">
+    insert into exam_questions
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      ques_id,
+      paper_id,
+      ques_type_id,
+      ques_parent_id,
+      ques_title,
+      ques_start_time,
+      ques_end_time,
+      ques_question_num,
+      ques_type,
+      ques_num,
+      ques_answer,
+      ques_dry_sign,
+      ques_example_sign,
+      ques_read_time,
+      ques_answer_time,
+      ques_opt_column,
+      ques_drag_sign,
+      ques_allow_char,
+      ques_listen_text,
+      ques_content,
+      subject_struct_id,
+      ques_listen_url,
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      #{quesId,jdbcType=VARCHAR},
+      #{paperId,jdbcType=VARCHAR},
+      #{quesTypeId,jdbcType=VARCHAR},
+      #{quesParentId,jdbcType=VARCHAR},
+      #{quesTitle,jdbcType=VARCHAR},
+      #{quesStartTime,jdbcType=INTEGER},
+      #{quesEndTime,jdbcType=INTEGER},
+      #{quesQuestionNum,jdbcType=INTEGER},
+      #{quesType,jdbcType=CHAR},
+      #{quesNum,jdbcType=VARCHAR},
+      #{quesAnswer,jdbcType=VARCHAR},
+      #{quesDrySign,jdbcType=VARCHAR},
+      #{quesExampleSign,jdbcType=VARCHAR},
+      #{quesReadTime,jdbcType=INTEGER},
+      #{quesAnswerTime,jdbcType=INTEGER},
+      #{quesOptColumn,jdbcType=INTEGER},
+      #{quesDragSign,jdbcType=VARCHAR},
+      #{quesAllowChar,jdbcType=VARCHAR},
+      #{quesListenText,jdbcType=VARCHAR},
+      #{quesContent,jdbcType=LONGVARCHAR},
+      #{subjectStructId,jdbcType=VARCHAR},
+      #{quesListenUrl,jdbcType=VARCHAR},
+    </trim>
+  </insert>
+  <update id="updateQuestion" parameterType="questions">
+    update exam_questions
+    <set >
+      <if test="paperId != null" >
+        paper_id = #{paperId,jdbcType=VARCHAR},
+      </if>
+      <if test="quesTypeId != null" >
+        ques_type_id = #{quesTypeId,jdbcType=VARCHAR},
+      </if>
+      <if test="quesParentId != null" >
+        ques_parent_id = #{quesParentId,jdbcType=VARCHAR},
+      </if>
+      <if test="quesTitle != null" >
+        ques_title = #{quesTitle,jdbcType=VARCHAR},
+      </if>
+      <if test="quesStartTime != null" >
+        ques_start_time = #{quesStartTime,jdbcType=INTEGER},
+      </if>
+      <if test="quesEndTime != null" >
+        ques_end_time = #{quesEndTime,jdbcType=INTEGER},
+      </if>
+      <if test="quesQuestionNum != null" >
+        ques_question_num = #{quesQuestionNum,jdbcType=INTEGER},
+      </if>
+      <if test="quesType != null" >
+        ques_type = #{quesType,jdbcType=CHAR},
+      </if>
+      <if test="quesNum != null" >
+        ques_num = #{quesNum,jdbcType=VARCHAR},
+      </if>
+      <if test="quesAnswer != null" >
+        ques_answer = #{quesAnswer,jdbcType=VARCHAR},
+      </if>
+      <if test="quesDrySign != null" >
+        ques_dry_sign = #{quesDrySign,jdbcType=VARCHAR},
+      </if>
+      <if test="quesExampleSign != null" >
+        ques_example_sign = #{quesExampleSign,jdbcType=VARCHAR},
+      </if>
+      <if test="quesReadTime != null" >
+        ques_read_time = #{quesReadTime,jdbcType=INTEGER},
+      </if>
+      <if test="quesAnswerTime != null" >
+        ques_answer_time = #{quesAnswerTime,jdbcType=INTEGER},
+      </if>
+      <if test="quesOptColumn != null" >
+        ques_opt_column = #{quesOptColumn,jdbcType=INTEGER},
+      </if>
+      <if test="quesDragSign != null" >
+        ques_drag_sign = #{quesDragSign,jdbcType=VARCHAR},
+      </if>
+      <if test="quesAllowChar != null" >
+        ques_allow_char = #{quesAllowChar,jdbcType=VARCHAR},
+      </if>
+      <if test="quesListenText != null" >
+        ques_listen_text = #{quesListenText,jdbcType=VARCHAR},
+      </if>
+      <if test="quesContent != null" >
+        ques_content = #{quesContent,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="subjectStructId != null" >
+        subject_struct_id = #{subjectStructId,jdbcType=VARCHAR},
+      </if>
+      <if test="quesListenUrl != null" >
+        ques_listen_url = #{quesListenUrl,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where ques_id = #{quesId,jdbcType=VARCHAR}
+  </update>
+
+</mapper>
