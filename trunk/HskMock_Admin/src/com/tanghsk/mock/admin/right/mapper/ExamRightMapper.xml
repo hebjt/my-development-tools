@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "mybatis-3-mapper.dtd" >
+<mapper namespace="com.tanghsk.mock.admin.user.mapper.ExamRightMapper" >
+  <cache type="org.mybatis.caches.ehcache.EhcacheCache" />
+  <resultMap id="BaseResultMap" type="com.tanghsk.mock.admin.exam.domain.ExamRight" >
+    <id column="right_id" property="rightId" jdbcType="VARCHAR" />
+    <result column="right_name" property="rightName" jdbcType="VARCHAR" />
+    <result column="right_desc" property="rightDesc" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    right_id, right_name, right_desc
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from exam_right
+    where right_id = #{rightId,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" flushCache="true" >
+    delete from exam_right
+    where right_id = #{rightId,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.tanghsk.mock.admin.exam.domain.ExamRight" flushCache="true" >
+    insert into exam_right (right_id, right_name, right_desc
+      )
+    values (#{rightId,jdbcType=VARCHAR}, #{rightName,jdbcType=VARCHAR}, #{rightDesc,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.tanghsk.mock.admin.exam.domain.ExamRight" flushCache="true" >
+    insert into exam_right
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      right_id,
+      right_name,
+      right_desc,
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      #{rightId,jdbcType=VARCHAR},
+      #{rightName,jdbcType=VARCHAR},
+      #{rightDesc,jdbcType=VARCHAR},
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.tanghsk.mock.admin.exam.domain.ExamRight" flushCache="true" >
+    update exam_right
+    <set >
+      <if test="rightName != null" >
+        right_name = #{rightName,jdbcType=VARCHAR},
+      </if>
+      <if test="rightDesc != null" >
+        right_desc = #{rightDesc,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where right_id = #{rightId,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.tanghsk.mock.admin.exam.domain.ExamRight" flushCache="true" >
+    update exam_right
+    set right_name = #{rightName,jdbcType=VARCHAR},
+      right_desc = #{rightDesc,jdbcType=VARCHAR}
+    where right_id = #{rightId,jdbcType=VARCHAR}
+  </update>
+</mapper>
