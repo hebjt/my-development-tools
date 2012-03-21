@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<b:beans xmlns="http://www.springframework.org/schema/security"
+    xmlns:b="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+                        http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security-3.1.xsd">
+    <debug />
+    
+    <http auto-config="true" use-expressions="true">
+        <intercept-url pattern="/examPaper/**" access="hasRole('ROLE_ADMIN')"/>
+        <intercept-url pattern="/subject/**" access="hasRole('ROLE_ADMIN')" />
+    	
+    	
+		<!-- 增加一个自定义的filter，放在FILTER_SECURITY_INTERCEPTOR之前， 实现用户、角色、权限、资源的数据库管理。 11/3/23 -->
+		<custom-filter ref="customFilter" before="FILTER_SECURITY_INTERCEPTOR" />
+    </http>
+    <!--
+    Usernames/Passwords are
+        rod/koala
+        dianne/emu
+        scott/wombat
+        peter/opal
+    -->
+    <!--  
+    <authentication-manager>
+		  <authentication-provider>
+            <password-encoder ref="encoder"/>
+            	<user-service>
+                <user name="rod" password="4efe081594ce25ee4efd9f7067f7f678a347bccf2de201f3adf2a3eb544850b465b4e51cdc3fcdde" authorities="supervisor, user, teller" />
+                <user name="dianne" password="957ea522524a41cbfb649a3e293d56268f840fd5b661b499b07858bc020d6d223f912e3ab303b00f" authorities="user,teller" />
+                <user name="scott" password="fb1f9e48058d30dc21c35ab4cf895e2a80f2f03fac549b51be637196dfb6b2b7276a89c65e38b7a1" authorities="user" />
+                <user name="peter" password="e175750688deee19d7179d444bfaf92129f4eea8b4503d83eb8f92a7dd9cda5fbae73638c913e420" authorities="user" />
+            
+            </user-service>
+        </authentication-provider>
+    </authentication-manager>
+    -->
+    
+    <!-- 一个自定义的filter，必须包含authenticationManager, accessDecisionManager,securityMetadataSource三个属性。 
+		11/3/23 -->
+	<b:bean id="customFilter" class="com.tanghsk.mock.admin.security.CustomFilterSecurityInterceptor">
+		<b:property name="authenticationManager" ref="authenticationManager" />
+		<b:property name="accessDecisionManager" ref="customAccessDecisionManager" />
+		<b:property name="securityMetadataSource" ref="customSecurityMetadataSource" />
+	</b:bean>
+	<!-- 注意能够为authentication-manager 设置alias别名 -->
+	<authentication-manager alias="authenticationManager">
+		<authentication-provider user-service-ref="customUserDetailService">
+		</authentication-provider>
+	</authentication-manager>
+	<!--在这个类中，你就可以从数据库中读入用户的密码，角色信息，是否锁定，账号是否过期等 -->
+	<b:bean id="customUserDetailService" class="com.tanghsk.mock.admin.security.CustomUserDetailsService" />
+	<!-- 访问决策器，决定某个用户具有的角色，是否有足够的权限去访问某个资源。11/3/23 -->
+	<b:bean id="customAccessDecisionManager" class="com.tanghsk.mock.admin.security.CustomAccessDecisionManager" />
+	<!-- 资源源数据定义，将所有的资源和权限对应关系建立起来，即定义某一资源可以被哪些角色去访问。11/3/23 -->
+	<b:bean id="customSecurityMetadataSource" class="com.tanghsk.mock.admin.security.CustomInvocationSecurityMetadataSource" />
+
+</b:beans>
