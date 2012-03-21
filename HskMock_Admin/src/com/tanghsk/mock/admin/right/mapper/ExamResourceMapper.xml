@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "mybatis-3-mapper.dtd" >
+<mapper namespace="com.tanghsk.mock.admin.user.mapper.ExamResourceMapper" >
+  <cache type="org.mybatis.caches.ehcache.EhcacheCache" />
+  <resultMap id="BaseResultMap" type="com.tanghsk.mock.admin.exam.domain.ExamResource" >
+    <id column="res_id" property="resId" jdbcType="VARCHAR" />
+    <result column="res_type" property="resType" jdbcType="VARCHAR" />
+    <result column="res_value" property="resValue" jdbcType="VARCHAR" />
+    <result column="res_desc" property="resDesc" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    res_id, res_type, res_value, res_desc
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from exam_resource
+    where res_id = #{resId,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" flushCache="true" >
+    delete from exam_resource
+    where res_id = #{resId,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.tanghsk.mock.admin.exam.domain.ExamResource" flushCache="true" >
+    insert into exam_resource (res_id, res_type, res_value, 
+      res_desc)
+    values (#{resId,jdbcType=VARCHAR}, #{resType,jdbcType=VARCHAR}, #{resValue,jdbcType=VARCHAR}, 
+      #{resDesc,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.tanghsk.mock.admin.exam.domain.ExamResource" flushCache="true" >
+    insert into exam_resource
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      res_id,
+      res_type,
+      res_value,
+      res_desc,
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      #{resId,jdbcType=VARCHAR},
+      #{resType,jdbcType=VARCHAR},
+      #{resValue,jdbcType=VARCHAR},
+      #{resDesc,jdbcType=VARCHAR},
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.tanghsk.mock.admin.exam.domain.ExamResource" flushCache="true" >
+    update exam_resource
+    <set >
+      <if test="resType != null" >
+        res_type = #{resType,jdbcType=VARCHAR},
+      </if>
+      <if test="resValue != null" >
+        res_value = #{resValue,jdbcType=VARCHAR},
+      </if>
+      <if test="resDesc != null" >
+        res_desc = #{resDesc,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where res_id = #{resId,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.tanghsk.mock.admin.exam.domain.ExamResource" flushCache="true" >
+    update exam_resource
+    set res_type = #{resType,jdbcType=VARCHAR},
+      res_value = #{resValue,jdbcType=VARCHAR},
+      res_desc = #{resDesc,jdbcType=VARCHAR}
+    where res_id = #{resId,jdbcType=VARCHAR}
+  </update>
+</mapper>
