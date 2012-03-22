@@ -112,4 +112,5 @@
 			</list>
 		</property>
 	</bean>
+	<bean id="rightService0" class="com.tanghsk.mock.admin.right.service.ExamRightService"></bean>
 </beans>

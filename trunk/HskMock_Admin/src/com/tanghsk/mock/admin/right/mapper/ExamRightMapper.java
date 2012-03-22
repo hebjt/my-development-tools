@@ -15,7 +15,7 @@ public interface ExamRightMapper {
 	 * @return list
 	 *
 	 */
-	List<ExamRight> loadListPageAll(Page page);
+	List<ExamRight> loadRightListPageAll(Page page);
 	/**
 	 * 加载一个用户的所有权限
 	 * @param map 封装username

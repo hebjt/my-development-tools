@@ -26,8 +26,8 @@ public class ExamRightService {
 	 * @return
 	 *
 	 */
-	public List<ExamRight> loadListPageAll(Page page){
-		List<ExamRight> list = rightMapper.loadListPageAll(page);
+	public List<ExamRight> loadRightListPageAll(Page page){
+		List<ExamRight> list = rightMapper.loadRightListPageAll(page);
 		return list;
 	}
 	/**
