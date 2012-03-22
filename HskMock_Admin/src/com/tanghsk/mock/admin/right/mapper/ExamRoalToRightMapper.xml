@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "mybatis-3-mapper.dtd" >
-<mapper namespace="com.tanghsk.mock.admin.user.mapper.ExamRoalToRightMapper" >
-  <cache type="org.mybatis.caches.ehcache.EhcacheCache" />
-  <resultMap id="BaseResultMap" type="com.tanghsk.mock.admin.exam.domain.ExamRoalToRightKey" >
+<mapper namespace="com.tanghsk.mock.admin.right.mapper.ExamRoalToRightMapper" >
+  <resultMap id="BaseResultMap" type="roalToRight" >
     <id column="res_id" property="resId" jdbcType="VARCHAR" />
     <id column="right_id" property="rightId" jdbcType="VARCHAR" />
     <id column="role_id" property="roleId" jdbcType="VARCHAR" />
@@ -10,19 +9,19 @@
   <sql id="Base_Column_List" >
     res_id, right_id, role_id
   </sql>
-  <delete id="deleteByPrimaryKey" parameterType="com.tanghsk.mock.admin.exam.domain.ExamRoalToRightKey" flushCache="true" >
+  <delete id="deleteByPrimaryKey" parameterType="roalToRight" flushCache="true" >
     delete from exam_roal_to_right
     where res_id = #{resId,jdbcType=VARCHAR}
       and right_id = #{rightId,jdbcType=VARCHAR}
       and role_id = #{roleId,jdbcType=VARCHAR}
   </delete>
-  <insert id="insert" parameterType="com.tanghsk.mock.admin.exam.domain.ExamRoalToRightKey" flushCache="true" >
+  <insert id="insert" parameterType="roalToRight" flushCache="true" >
     insert into exam_roal_to_right (res_id, right_id, role_id
       )
     values (#{resId,jdbcType=VARCHAR}, #{rightId,jdbcType=VARCHAR}, #{roleId,jdbcType=VARCHAR}
       )
   </insert>
-  <insert id="insertSelective" parameterType="com.tanghsk.mock.admin.exam.domain.ExamRoalToRightKey" flushCache="true" >
+  <insert id="insertSelective" parameterType="roalToRight" flushCache="true" >
     insert into exam_roal_to_right
     <trim prefix="(" suffix=")" suffixOverrides="," >
       res_id,

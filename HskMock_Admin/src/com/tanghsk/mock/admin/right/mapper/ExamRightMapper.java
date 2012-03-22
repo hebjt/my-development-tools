@@ -1,8 +1,28 @@
 package com.tanghsk.mock.admin.right.mapper;
 
-import com.tanghsk.mock.admin.right.domain.ExamRight;
+import java.util.List;
+import java.util.Map;
 
+import org.springframework.stereotype.Repository;
+
+import com.tanghsk.mock.admin.right.domain.ExamRight;
+import com.tanghsk.util.Page;
+@Repository("rightMapper")
 public interface ExamRightMapper {
+	/**
+	 * 加载所有权限数据
+	 * @param page 分页参数
+	 * @return list
+	 *
+	 */
+	List<ExamRight> loadListPageAll(Page page);
+	/**
+	 * 加载一个用户的所有权限
+	 * @param map 封装username
+	 * @return
+	 *
+	 */
+	List<String>loadUserAuthorities(Map<String,String> map);
     /**
      * 根据主键删除
      * 参数:主键
