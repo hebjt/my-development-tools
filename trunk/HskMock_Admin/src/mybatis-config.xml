@@ -13,6 +13,14 @@
 		<typeAlias alias="publish" type="com.tanghsk.mock.admin.exam.domain.ExamPaperPublish"/>
 		<typeAlias alias="publishstatus" type="com.tanghsk.mock.admin.exam.domain.ExamPaperPublishStatus"/>
 		<typeAlias alias="parse" type="com.tanghsk.mock.admin.exam.domain.ExamQuestionParse"/>
+		<!-- 权限相关 -->
+		<typeAlias alias="admin" type="com.tanghsk.mock.admin.right.domain.ExamAdminstrator"/>
+		<typeAlias alias="adminToRight" type="com.tanghsk.mock.admin.right.domain.ExamAdminToRightKey"/>
+		<typeAlias alias="adminToRole" type="com.tanghsk.mock.admin.right.domain.ExamAdminToRoleKey"/>
+		<typeAlias alias="resource" type="com.tanghsk.mock.admin.right.domain.ExamResource"/>
+		<typeAlias alias="right" type="com.tanghsk.mock.admin.right.domain.ExamRight"/>
+		<typeAlias alias="role" type="com.tanghsk.mock.admin.right.domain.ExamRole"/>
+		<typeAlias alias="roalToRight" type="com.tanghsk.mock.admin.right.domain.ExamRoalToRightKey"/>
 	</typeAliases>
 	<plugins>
 		<plugin interceptor="com.tanghsk.plugin.PagePlugin">
@@ -31,5 +39,13 @@
 		<mapper resource="com/tanghsk/mock/admin/exam/mapper/ExamPaperPublishMapper.xml" />
 		<mapper resource="com/tanghsk/mock/admin/exam/mapper/ExamPaperPublishStatusMapper.xml" />
 		<mapper resource="com/tanghsk/mock/admin/exam/mapper/ExamQuestionParseMapper.xml" />
+		<!-- 权限相关 -->
+		<mapper resource="com/tanghsk/mock/admin/right/mapper/ExamAdminstratorMapper.xml" />
+		<mapper resource="com/tanghsk/mock/admin/right/mapper/ExamAdminToRightMapper.xml" />
+		<mapper resource="com/tanghsk/mock/admin/right/mapper/ExamAdminToRoleMapper.xml" />
+		<mapper resource="com/tanghsk/mock/admin/right/mapper/ExamResourceMapper.xml" />
+		<mapper resource="com/tanghsk/mock/admin/right/mapper/ExamRightMapper.xml" />
+		<mapper resource="com/tanghsk/mock/admin/right/mapper/ExamRoalToRightMapper.xml" />
+		<mapper resource="com/tanghsk/mock/admin/right/mapper/ExamRoleMapper.xml" />
 	</mappers>
 </configuration>	

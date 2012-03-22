@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "mybatis-3-mapper.dtd" >
-<mapper namespace="com.tanghsk.mock.admin.user.mapper.ExamRoleMapper" >
-  <cache type="org.mybatis.caches.ehcache.EhcacheCache" />
-  <resultMap id="BaseResultMap" type="com.tanghsk.mock.admin.exam.domain.ExamRole" >
+<mapper namespace="com.tanghsk.mock.admin.right.mapper.ExamRoleMapper" >
+  <resultMap id="BaseResultMap" type="role" >
     <id column="role_id" property="roleId" jdbcType="VARCHAR" />
     <result column="role_name" property="roleName" jdbcType="VARCHAR" />
     <result column="role_desc" property="roleDesc" jdbcType="VARCHAR" />
@@ -20,13 +19,13 @@
     delete from exam_role
     where role_id = #{roleId,jdbcType=VARCHAR}
   </delete>
-  <insert id="insert" parameterType="com.tanghsk.mock.admin.exam.domain.ExamRole" flushCache="true" >
+  <insert id="insert" parameterType="role" flushCache="true" >
     insert into exam_role (role_id, role_name, role_desc
       )
     values (#{roleId,jdbcType=VARCHAR}, #{roleName,jdbcType=VARCHAR}, #{roleDesc,jdbcType=VARCHAR}
       )
   </insert>
-  <insert id="insertSelective" parameterType="com.tanghsk.mock.admin.exam.domain.ExamRole" flushCache="true" >
+  <insert id="insertSelective" parameterType="role" flushCache="true" >
     insert into exam_role
     <trim prefix="(" suffix=")" suffixOverrides="," >
       role_id,
@@ -39,7 +38,7 @@
       #{roleDesc,jdbcType=VARCHAR},
     </trim>
   </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="com.tanghsk.mock.admin.exam.domain.ExamRole" flushCache="true" >
+  <update id="updateByPrimaryKeySelective" parameterType="role" flushCache="true" >
     update exam_role
     <set >
       <if test="roleName != null" >
@@ -51,7 +50,7 @@
     </set>
     where role_id = #{roleId,jdbcType=VARCHAR}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.tanghsk.mock.admin.exam.domain.ExamRole" flushCache="true" >
+  <update id="updateByPrimaryKey" parameterType="role" flushCache="true" >
     update exam_role
     set role_name = #{roleName,jdbcType=VARCHAR},
       role_desc = #{roleDesc,jdbcType=VARCHAR}

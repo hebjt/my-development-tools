@@ -10,7 +10,13 @@ import org.springframework.security.access.SecurityConfig;
 import org.springframework.security.authentication.InsufficientAuthenticationException;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
-
+/**
+ * 在这个类中，最重要的是decide方法，如果不存在对该资源的定义，直接放行；
+ * 否则，如果找到正确的角色，即认为拥有权限，并放行，
+ * 否则throw new AccessDeniedException("no right")。所有的异常建议平台统一进行封装并管理
+ * @author cuijingtao
+ *
+ */
 public class CustomAccessDecisionManager implements AccessDecisionManager {
 
 	@Override

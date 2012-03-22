@@ -1,8 +1,19 @@
 package com.tanghsk.mock.admin.right.mapper;
 
-import com.tanghsk.mock.admin.right.domain.ExamResource;
+import java.util.List;
 
+import org.springframework.stereotype.Repository;
+
+import com.tanghsk.mock.admin.right.domain.ExamResource;
+@Repository("resourceMapper")
 public interface ExamResourceMapper {
+	/**
+	 * 获取某个权限下的所有资源
+	 * @param rightId 权限id
+	 * @return list
+	 *
+	 */
+	List<ExamResource> getAllResource(String rightId);
     /**
      * 根据主键删除
      * 参数:主键

@@ -2,7 +2,11 @@ package com.tanghsk.mock.admin.security;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.GrantedAuthorityImpl;
 import org.springframework.security.core.userdetails.User;
@@ -10,28 +14,34 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 
+import com.tanghsk.mock.admin.right.mapper.ExamRightMapper;
+import com.tanghsk.mock.admin.right.service.ExamRightService;
+/**
+ * 在这个类中，你就可以从数据库中读入用户的密码，
+ * 角色信息，是否锁定，账号是否过期等。建议通过我们封装的平台级持久层管理类获取和管理
+ * @author cuijingtao
+ *
+ */
 public class CustomUserDetailsService implements UserDetailsService {
+	
+	@Autowired
+	private ExamRightService rightService;
 
 	@Override
 	public UserDetails loadUserByUsername(String username)
 			throws UsernameNotFoundException {
 		Collection<GrantedAuthority> auths = new ArrayList<GrantedAuthority>();
-		//GrantedAuthorityImpl auth2 = new GrantedAuthorityImpl("ROLE_ADMIN");
-		// auths.add(auth2);
-		if (username.equals("user")) {
-			auths = new ArrayList<GrantedAuthority>();
-			//GrantedAuthorityImpl auth1 = new GrantedAuthorityImpl("ROLE_USER");
-			auths.add(new GrantedAuthorityImpl("ROLE_USER"));
-			auths.add(new GrantedAuthorityImpl("ROLE_ADMIN"));
-		}
+		Map<String,String> map = new HashMap<String,String>();
+		map.put("username0", username);
+		map.put("username1", username);
+		//得到用户的权限
+		auths = rightService.loadUserAuthoritiesByName(map);
 
-		// User(String username, String password, boolean enabled,
-		// booleanaccountNonExpired,
-		// booleancredentialsNonExpired, booleanaccountNonLocked,
-		// Collection<GrantedAuthority> authorities) {
 		User user = new User(username, "user", true, true, true, true, auths);
 		return user;
 
 	}
+	
+
 
 }
