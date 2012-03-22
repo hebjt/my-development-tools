@@ -7,7 +7,6 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
-import java.io.Reader;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Enumeration;
@@ -18,12 +17,11 @@ import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
 
 import org.apache.commons.codec.digest.DigestUtils;
-import org.apache.ibatis.io.Resources;
-import org.apache.ibatis.session.SqlSession;
-import org.apache.ibatis.session.SqlSessionFactory;
-import org.apache.ibatis.session.SqlSessionFactoryBuilder;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 import com.tanghsk.mock.admin.right.domain.ExamRight;
+import com.tanghsk.mock.admin.right.service.ExamRightService;
 
 public class CommUtil {
 	private static ArrayList<String> allFiles = new ArrayList<String>();
@@ -179,6 +177,7 @@ public class CommUtil {
 		// writeProperties("info.properties","age","21");
 		// readProperties("info.properties" );
 		//System.out.println("OK");
+		/*
         String resource = "mybatis-config.xml";  
         Reader reader = Resources.getResourceAsReader(resource);  
         SqlSessionFactory ssf = new SqlSessionFactoryBuilder().build(reader);  
@@ -193,6 +192,12 @@ public class CommUtil {
         } finally {  
             session.close();  
         }  
+        */
+        ApplicationContext context = new ClassPathXmlApplicationContext("spring-application.xml");  
+        ExamRightService userService = (ExamRightService)context.getBean("rightService");  
+        Page page = new Page();
+        List<ExamRight> userInfo = userService.loadListPageAll(page);  
+        System.out.println(userInfo.size()); 
     }
 
 }

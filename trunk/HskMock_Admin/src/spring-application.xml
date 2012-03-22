@@ -19,8 +19,8 @@
 		<property name="locations">
 			<list>
 				<!--<value>file:${configPath}/dataSource.properties</value>-->
-				<!-- <value>classpath:dataSource.properties</value> -->
-				<value>/WEB-INF/config/dataSource.properties</value>
+				 <value>classpath:dataSource.properties</value>
+				<!--  <value>/WEB-INF/config/dataSource.properties</value>-->
 			</list>
 		</property>
 	</bean>
