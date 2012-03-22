@@ -13,6 +13,8 @@ import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.apache.ibatis.session.SqlSessionFactoryBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.security.access.ConfigAttribute;
 import org.springframework.security.access.SecurityConfig;
 import org.springframework.security.web.FilterInvocation;
@@ -38,10 +40,8 @@ import com.tanghsk.util.Page;
  */
 public class CustomInvocationSecurityMetadataSource implements
 		FilterInvocationSecurityMetadataSource {
-	@Autowired
-	private ExamRightService rightService;
 
-	
+
 	private UrlMatcher urlMatcher = new AntUrlPathMatcher();
 	private static Map<String, Collection<ConfigAttribute>> resourceMap = null;
 
@@ -78,11 +78,11 @@ public class CustomInvocationSecurityMetadataSource implements
 	}
 
 	private void loadResourceDefine() throws Exception{
-		String resource = "mybatis-config.xml";  
-        Reader reader = Resources.getResourceAsReader(resource);  
-        SqlSessionFactory ssf = new SqlSessionFactoryBuilder().build(reader);  
-          
-        SqlSession session = ssf.openSession(); 
+		ApplicationContext context = new ClassPathXmlApplicationContext("spring-application.xml");  
+        ExamRightService rightService = (ExamRightService)context.getBean("rightService");  
+        Page page = new Page();
+        List<ExamRight> right = rightService.loadListPageAll(page); 
+        System.out.println(right.size()); 
 	
 		/*
 		resourceMap = new HashMap<String, Collection<ConfigAttribute>>();
@@ -98,8 +98,8 @@ public class CustomInvocationSecurityMetadataSource implements
 		resourceMap.put("/subject/**", attsno);
 		*/
 		//提取所有权限
-		Page page = new Page();
-		List<ExamRight> right = rightService.loadListPageAll(page);
+		//Page page = new Page();
+		//List<ExamRight> right = rightService.loadListPageAll(page);
 		/*
 		 * 应当是资源为key， 权限为value。 资源通常为url， 权限就是那些以ROLE_为前缀的角色。 一个资源可以由多个权限来访问。
 		 * sparta
