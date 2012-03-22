@@ -82,31 +82,10 @@ public class CustomInvocationSecurityMetadataSource implements
 	private void loadResourceDefine() throws Exception{
 		
 		ApplicationContext context = new ClassPathXmlApplicationContext("spring-application.xml");  
-        ExamRightService rightService0 = (ExamRightService)context.getBean("rightService");  
+        ExamRightService rightService0 = (ExamRightService)context.getBean("rightServiceCreat");  
         Page page = new Page();
         List<ExamRight> right = rightService0.loadRightListPageAll(page); 
-        System.out.println(right.size()); 
-	
-		/*
-		resourceMap = new HashMap<String, Collection<ConfigAttribute>>();
-		Collection<ConfigAttribute> atts = new ArrayList<ConfigAttribute>();
-		ConfigAttribute ca = new SecurityConfig("ROLE_USER");
-		atts.add(ca);
-		// resourceMap.put("/index.html", atts);
-		resourceMap.put("/examPaper/**", atts);
 
-		Collection<ConfigAttribute> attsno = new ArrayList<ConfigAttribute>();
-		ConfigAttribute cano = new SecurityConfig("ROLE_NO");
-		attsno.add(cano);
-		resourceMap.put("/subject/**", attsno);
-		*/
-		//提取所有权限
-		//Page page = new Page();
-		//List<ExamRight> right = rightService.loadRightListPageAll(page);
-		/*
-		 * 应当是资源为key， 权限为value。 资源通常为url， 权限就是那些以ROLE_为前缀的角色。 一个资源可以由多个权限来访问。
-		 * sparta
-		 */
 		resourceMap = new HashMap<String, Collection<ConfigAttribute>>();
 		for (ExamRight auth : right) {
 			ConfigAttribute ca = new SecurityConfig(auth.getRightId());
@@ -118,7 +97,8 @@ public class CustomInvocationSecurityMetadataSource implements
 				String url = res.getResValue();
 				
 				/*
-				 * 判断资源文件和权限的对应关系，如果已经存在相关的资源url，则要通过该url为key提取出权限集合，将权限增加到权限集合中。
+				 * 判断资源文件和权限的对应关系，如果已经存在相关的资源url，
+				 * 则要通过该url为key提取出权限集合，将权限增加到权限集合中。
 				 * sparta
 				 */
 				if (resourceMap.containsKey(url)) {

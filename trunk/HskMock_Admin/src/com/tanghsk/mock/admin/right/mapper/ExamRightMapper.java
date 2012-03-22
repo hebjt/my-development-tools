@@ -22,7 +22,7 @@ public interface ExamRightMapper {
 	 * @return
 	 *
 	 */
-	List<String>loadUserAuthorities(Map<String,String> map);
+	List<ExamRight>loadUserAuthorities(Map<String,String> map);
     /**
      * 根据主键删除
      * 参数:主键

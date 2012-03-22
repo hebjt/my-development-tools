@@ -4,7 +4,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.GrantedAuthorityImpl;
 import org.springframework.stereotype.Service;
@@ -16,6 +19,7 @@ import com.tanghsk.mock.admin.right.mapper.ExamRightMapper;
 import com.tanghsk.util.Page;
 @Service("rightService")
 public class ExamRightService {
+	protected static Logger logger = Logger.getLogger("ExamRightService");
 	@Autowired
 	private ExamRightMapper rightMapper;
 	@Autowired
@@ -49,16 +53,17 @@ public class ExamRightService {
 	public List<GrantedAuthority> loadUserAuthoritiesByName(Map<String,String> map) {
 		try {
 			List<GrantedAuthority> auths = new ArrayList<GrantedAuthority>();
-			List<String> authList = loadUserAuthorities(map);
-			for (String roleName : authList) {
+			List<ExamRight> authList = loadUserAuthorities(map);
+			for (ExamRight roleName : authList) {
 				//GrantedAuthorityImpl authority = new GrantedAuthorityImpl(roleName);
-				auths.add(new GrantedAuthorityImpl(roleName));
+				auths.add(new GrantedAuthorityImpl(roleName.getRightId()));
 			}
 
 			return auths;
 
 		} catch (RuntimeException re) {
-			//log.error("find by authorities by username failed.", re);
+			logger.error("find by authorities by username failed.", re);
+			//re.printStackTrace();
 			throw re;
 		}
 	}
@@ -69,7 +74,9 @@ public class ExamRightService {
 	 * @return
 	 *
 	 */
-	public List<String> loadUserAuthorities(Map<String,String> map) {
+	public List<ExamRight> loadUserAuthorities(Map<String,String> map) {
+		//ApplicationContext context = new ClassPathXmlApplicationContext("spring-application.xml");  
+        //ExamRightService rightService0 = (ExamRightService)context.getBean("rightServiceCreat"); 
 		return rightMapper.loadUserAuthorities(map);
 	}
 

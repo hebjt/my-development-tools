@@ -16,7 +16,7 @@
     from exam_right
   </select>
   <!-- 获得某个用户的所有权限 -->
-  <select id="loadListPageAll" resultType="list" parameterType="map">
+  <select id="loadUserAuthorities" resultMap="BaseResultMap" parameterType="map">
     SELECT m.right_id    
     from 
     (select distinct f.right_id
@@ -35,7 +35,7 @@
     inner join exam_admin_to_role  d on b.admin_id=d.admin_id
     inner join exam_role_to_right  e on e.role_id =d.role_id
     inner join exam_right          f on f.right_id=c.right_id
-    where a.user_name=#{username1) m    
+    where a.user_name=#{username1} ) m    
   </select>
   
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >

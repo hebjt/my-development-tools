@@ -7,6 +7,8 @@ import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.GrantedAuthorityImpl;
 import org.springframework.security.core.userdetails.User;
@@ -34,8 +36,10 @@ public class CustomUserDetailsService implements UserDetailsService {
 		Map<String,String> map = new HashMap<String,String>();
 		map.put("username0", username);
 		map.put("username1", username);
+		ApplicationContext context = new ClassPathXmlApplicationContext("spring-application.xml");  
+        ExamRightService rightService0 = (ExamRightService)context.getBean("rightServiceCreat"); 
 		//得到用户的权限
-		auths = rightService.loadUserAuthoritiesByName(map);
+		auths = rightService0.loadUserAuthoritiesByName(map);
 
 		User user = new User(username, "user", true, true, true, true, auths);
 		return user;
