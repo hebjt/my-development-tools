@@ -10,7 +10,7 @@
     right_id, right_name, right_desc
   </sql>
   <!-- 加载所有权限 -->
-  <select id="loadListPageAll" resultMap="BaseResultMap">
+  <select id="loadRightListPageAll" resultMap="BaseResultMap">
     select
     <include refid="Base_Column_List" />
     from exam_right

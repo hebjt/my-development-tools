@@ -9,6 +9,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.apache.ibatis.io.Resources;
+import org.apache.ibatis.session.Configuration;
 import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.apache.ibatis.session.SqlSessionFactoryBuilder;
@@ -40,7 +41,8 @@ import com.tanghsk.util.Page;
  */
 public class CustomInvocationSecurityMetadataSource implements
 		FilterInvocationSecurityMetadataSource {
-
+	@Autowired
+	private ExamRightService rightService;
 
 	private UrlMatcher urlMatcher = new AntUrlPathMatcher();
 	private static Map<String, Collection<ConfigAttribute>> resourceMap = null;
@@ -78,10 +80,11 @@ public class CustomInvocationSecurityMetadataSource implements
 	}
 
 	private void loadResourceDefine() throws Exception{
+		
 		ApplicationContext context = new ClassPathXmlApplicationContext("spring-application.xml");  
-        ExamRightService rightService = (ExamRightService)context.getBean("rightService");  
+        ExamRightService rightService0 = (ExamRightService)context.getBean("rightService");  
         Page page = new Page();
-        List<ExamRight> right = rightService.loadListPageAll(page); 
+        List<ExamRight> right = rightService0.loadRightListPageAll(page); 
         System.out.println(right.size()); 
 	
 		/*
@@ -99,7 +102,7 @@ public class CustomInvocationSecurityMetadataSource implements
 		*/
 		//提取所有权限
 		//Page page = new Page();
-		//List<ExamRight> right = rightService.loadListPageAll(page);
+		//List<ExamRight> right = rightService.loadRightListPageAll(page);
 		/*
 		 * 应当是资源为key， 权限为value。 资源通常为url， 权限就是那些以ROLE_为前缀的角色。 一个资源可以由多个权限来访问。
 		 * sparta
@@ -109,7 +112,7 @@ public class CustomInvocationSecurityMetadataSource implements
 			ConfigAttribute ca = new SecurityConfig(auth.getRightId());
 			//加载资源表与此权限相关的资源
 
-			List<ExamResource> resList = rightService.getAllResource(auth.getRightId());
+			List<ExamResource> resList = rightService0.getAllResource(auth.getRightId());
 
 			for (ExamResource res : resList) {
 				String url = res.getResValue();

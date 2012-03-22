@@ -194,9 +194,9 @@ public class CommUtil {
         }  
         */
         ApplicationContext context = new ClassPathXmlApplicationContext("spring-application.xml");  
-        ExamRightService userService = (ExamRightService)context.getBean("rightService");  
+        ExamRightService userService = (ExamRightService)context.getBean("rightService0");  
         Page page = new Page();
-        List<ExamRight> userInfo = userService.loadListPageAll(page);  
+        List<ExamRight> userInfo = userService.loadRightListPageAll(page);  
         System.out.println(userInfo.size()); 
     }
 
