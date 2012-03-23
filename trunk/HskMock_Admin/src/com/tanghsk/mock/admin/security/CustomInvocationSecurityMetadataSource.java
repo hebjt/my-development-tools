@@ -62,6 +62,16 @@ public class CustomInvocationSecurityMetadataSource implements
 			throws IllegalArgumentException {
 		// guess object is a URL.
 		String url = ((FilterInvocation) object).getRequestUrl();
+		
+		Iterator iter = resourceMap.entrySet().iterator(); 
+		while (iter.hasNext()) { 
+		    Map.Entry entry = (Map.Entry) iter.next(); 
+		    Object key = entry.getKey(); 
+		    Object val = entry.getValue(); 
+		    System.out.println("key:"+key+"value:"+val);
+		} 
+		
+		/*
 		Iterator<String> ite = resourceMap.keySet().iterator();
 		while (ite.hasNext()) {
 			String resURL = ite.next();
@@ -69,6 +79,15 @@ public class CustomInvocationSecurityMetadataSource implements
 				return resourceMap.get(resURL);
 			}
 		}
+		*/
+		Iterator ite = resourceMap.entrySet().iterator(); 
+		while (ite.hasNext()) { 
+		    Map.Entry entry = (Map.Entry) ite.next(); 
+			if (urlMatcher.pathMatchesUrl(entry.getKey(), url)) {
+				return resourceMap.get(entry.getKey());
+			}
+		} 
+
 		return null;
 
 	}
@@ -82,9 +101,9 @@ public class CustomInvocationSecurityMetadataSource implements
 	private void loadResourceDefine() throws Exception{
 		
 		ApplicationContext context = new ClassPathXmlApplicationContext("spring-application.xml");  
-        ExamRightService rightService0 = (ExamRightService)context.getBean("rightServiceCreat");  
-        Page page = new Page();
-        List<ExamRight> right = rightService0.loadRightListPageAll(page); 
+        ExamRightService rightService0 = (ExamRightService)context.getBean("rightServiceCreat");
+        //获取所有权限
+        List<ExamRight> right = rightService0.getAllRight(); 
 
 		resourceMap = new HashMap<String, Collection<ConfigAttribute>>();
 		for (ExamRight auth : right) {

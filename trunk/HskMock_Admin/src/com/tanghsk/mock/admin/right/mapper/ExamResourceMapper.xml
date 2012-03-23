@@ -12,10 +12,14 @@
   </sql>
   <!-- 获取某个权限的所有资源列表 -->
   <select id="getAllResource" resultMap="BaseResultMap" parameterType="java.lang.String" >
-    select a.*
+    select distinct a.*
     from exam_resource a inner join exam_admin_to_right b on a.res_id=b.res_id 
     inner join exam_right c on b.right_id=c.right_id
     where c.right_id=#{rightId}
+  </select>
+  <!-- 系统所有资源列表 -->
+  <select id="getListPageResource" resultMap="BaseResultMap">
+  	select * from exam_resource
   </select>
   
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >

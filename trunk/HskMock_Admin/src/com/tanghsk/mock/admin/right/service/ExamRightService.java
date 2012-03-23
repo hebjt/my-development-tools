@@ -6,8 +6,6 @@ import java.util.Map;
 
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.ApplicationContext;
-import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.GrantedAuthorityImpl;
 import org.springframework.stereotype.Service;
@@ -16,6 +14,8 @@ import com.tanghsk.mock.admin.right.domain.ExamResource;
 import com.tanghsk.mock.admin.right.domain.ExamRight;
 import com.tanghsk.mock.admin.right.mapper.ExamResourceMapper;
 import com.tanghsk.mock.admin.right.mapper.ExamRightMapper;
+import com.tanghsk.mock.admin.user.domain.ExamUser;
+import com.tanghsk.mock.admin.user.mapper.ExamUserMapper;
 import com.tanghsk.util.Page;
 @Service("rightService")
 public class ExamRightService {
@@ -24,14 +24,53 @@ public class ExamRightService {
 	private ExamRightMapper rightMapper;
 	@Autowired
 	private ExamResourceMapper resourceMapper;
+	@Autowired
+	private ExamUserMapper userMapper;
+	/**
+	 * 获得全部资源列表
+	 * @param page
+	 * @return
+	 */
+	public List<ExamResource> getListPageResource(Page page){
+		return resourceMapper.getListPageResource(page);
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	/*-----------------------------------分割线-----------------------------------------------*/
+	/**
+	 * 根据username加载客户对象
+	 * @param username
+	 * @return
+	 */
+	public ExamUser findUserById(String username){
+		return userMapper.findUserById(username);
+	}
 	/**
 	 * 加载所有权限数据
 	 * @param page
 	 * @return
 	 *
 	 */
-	public List<ExamRight> loadRightListPageAll(Page page){
-		List<ExamRight> list = rightMapper.loadRightListPageAll(page);
+	public List<ExamRight> getAllRight(){
+		List<ExamRight> list = rightMapper.getAllRight();
 		return list;
 	}
 	/**
@@ -43,6 +82,7 @@ public class ExamRightService {
 	public List<ExamResource> getAllResource(String rightId){
 		return resourceMapper.getAllResource(rightId);
 	}
+	
 	/**
 	 * 把用户权限封装成GrantedAuthority数组 ，交由UserDetailsService处理
 	 * @param username

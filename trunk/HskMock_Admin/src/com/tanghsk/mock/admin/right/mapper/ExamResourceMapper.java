@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.stereotype.Repository;
 
 import com.tanghsk.mock.admin.right.domain.ExamResource;
+import com.tanghsk.util.Page;
 @Repository("resourceMapper")
 public interface ExamResourceMapper {
 	/**
@@ -14,6 +15,12 @@ public interface ExamResourceMapper {
 	 *
 	 */
 	List<ExamResource> getAllResource(String rightId);
+	/**
+	 * 获取系统内所有的资源列表
+	 * @return
+	 */
+	List<ExamResource> getListPageResource(Page page);
+	
     /**
      * 根据主键删除
      * 参数:主键

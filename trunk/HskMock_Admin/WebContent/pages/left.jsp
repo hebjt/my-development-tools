@@ -67,8 +67,8 @@
 				</li>
 				<li><span class="folder"><strong>资源权限管理</strong></span>
 					<ul>
-						<li><span class="file"><a href="#">测试节点</a></span></li>
-						<li><span class="file"><a href="#">测试节点</a></span></li>
+						<li><span class="file"><a href="../system/resource.action" target="mainFrame">系统资源管理</a></span></li>
+						<li><span class="file"><a href="#">角色管理</a></span></li>
 					</ul>
 				</li>					
 			</ul>

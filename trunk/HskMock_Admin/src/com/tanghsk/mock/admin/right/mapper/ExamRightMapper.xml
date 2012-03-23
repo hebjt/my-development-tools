@@ -9,7 +9,11 @@
   <sql id="Base_Column_List" >
     right_id, right_name, right_desc
   </sql>
-  <!-- 加载所有权限 -->
+  <!-- 获取所有权限 -->
+  <select id="getAllRight" resultMap="BaseResultMap">
+  	select * from exam_right
+  </select>
+  <!-- 加载所有权限 分页 -->
   <select id="loadRightListPageAll" resultMap="BaseResultMap">
     select
     <include refid="Base_Column_List" />

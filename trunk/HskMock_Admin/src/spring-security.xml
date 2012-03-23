@@ -6,11 +6,17 @@
                         http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security-3.1.xsd">
     <debug />
     
-    <http auto-config="true" use-expressions="true">
-        <intercept-url pattern="/examPaper/**" access="hasRole('ROLE_ADMIN')"/>
-        <intercept-url pattern="/subject/**" access="hasRole('ROLE_ADMIN')" />
-    	
-    	
+    <http pattern="/**/*.jpg" security="none"/>
+    <http pattern="/**/*.png" security="none"/>
+    <http pattern="/**/*.gif" security="none"/>
+    <http pattern="/**/*.css" security="none"/>
+    <http pattern="/**/*.js" security="none"/>
+    <http auto-config="true" >
+    	<form-login authentication-failure-url="/403.jsp"/>
+    	 <!-- Uncomment to limit the number of sessions a user can have -->
+        <session-management>
+            <concurrency-control max-sessions="1" error-if-maximum-exceeded="true" />
+        </session-management>
 		<!-- 增加一个自定义的filter，放在FILTER_SECURITY_INTERCEPTOR之前， 实现用户、角色、权限、资源的数据库管理。 11/3/23 -->
 		<custom-filter ref="customFilter" before="FILTER_SECURITY_INTERCEPTOR" />
     </http>
