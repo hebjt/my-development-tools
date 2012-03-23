@@ -10,6 +10,11 @@ import com.tanghsk.util.Page;
 @Repository("rightMapper")
 public interface ExamRightMapper {
 	/**
+	 * 获取所有权限 ---不分页
+	 * @return
+	 */
+	List<ExamRight> getAllRight();
+	/**
 	 * 加载所有权限数据
 	 * @param page 分页参数
 	 * @return list

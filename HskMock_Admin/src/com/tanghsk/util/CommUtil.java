@@ -10,18 +10,12 @@ import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Enumeration;
-import java.util.List;
 import java.util.Properties;
 import java.util.Random;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
 
 import org.apache.commons.codec.digest.DigestUtils;
-import org.springframework.context.ApplicationContext;
-import org.springframework.context.support.ClassPathXmlApplicationContext;
-
-import com.tanghsk.mock.admin.right.domain.ExamRight;
-import com.tanghsk.mock.admin.right.service.ExamRightService;
 
 public class CommUtil {
 	private static ArrayList<String> allFiles = new ArrayList<String>();
@@ -172,32 +166,10 @@ public class CommUtil {
 		return allFileName;
 	}
 
-	public static void main(String[] args) throws IOException{
-		//readValue("src/uploadFile.properties", "firstworkspace");
+	public static void main(String[] args) {
+		readValue("src/uploadFile.properties", "firstworkspace");
 		// writeProperties("info.properties","age","21");
 		// readProperties("info.properties" );
-		//System.out.println("OK");
-		/*
-        String resource = "mybatis-config.xml";  
-        Reader reader = Resources.getResourceAsReader(resource);  
-        SqlSessionFactory ssf = new SqlSessionFactoryBuilder().build(reader);  
-          
-        SqlSession session = ssf.openSession();  
-          
-        try {  
-        	List<ExamRight> riht = session.selectList("com.tanghsk.mock.admin.right.mapper.ExamRightMapper.loadListPageAll");  
-            System.out.println(riht.size());  
-        } catch (Exception e) {  
-            e.printStackTrace();  
-        } finally {  
-            session.close();  
-        }  
-        */
-        ApplicationContext context = new ClassPathXmlApplicationContext("spring-application.xml");  
-        ExamRightService userService = (ExamRightService)context.getBean("rightService0");  
-        Page page = new Page();
-        List<ExamRight> userInfo = userService.loadRightListPageAll(page);  
-        System.out.println(userInfo.size()); 
-    }
-
+		System.out.println("OK");
+	}
 }
