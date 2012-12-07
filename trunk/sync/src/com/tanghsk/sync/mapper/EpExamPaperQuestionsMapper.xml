@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "mybatis-3-mapper.dtd" >
+<mapper namespace="com.tanghsk.sync.mapper.EpExamPaperQuestionsMapper">
+	<resultMap id="BaseResultMap" type="pques">
+		<id column="id" property="id" jdbcType="VARCHAR" />
+		<result column="que_id" property="queId" jdbcType="VARCHAR" />
+		<result column="struc_id" property="strucId" jdbcType="VARCHAR" />
+		<result column="seq_num" property="seqNum" jdbcType="INTEGER" />
+		<result column="exam_con" property="examCon" jdbcType="VARCHAR" />
+		<association property="elQuestionsQueId" column="queId" select="com.tanghsk.sync.mapper.ElQuestionsMapper.selectByPrimaryKey" />
+		<association property="epExamPaperStrutStrucId" column="strucId" select="com.tanghsk.sync.mapper.EpExamPaperStrutMapper.selectByPrimaryKey" />
+	</resultMap>
+	<select id="selectByQueId" resultMap="BaseResultMap">
+		select
+		<include refid="Base_Column_List" />
+		from ep_exam_paper_questions where que_id =#{que_id}
+	</select>
+	<select id="selectByStrucId" resultMap="BaseResultMap">
+		select
+		<include refid="Base_Column_List" />
+		from ep_exam_paper_questions where struc_id =#{struc_id}
+	</select>
+	<sql id="Base_Column_List">
+		id, que_id, struc_id, seq_num, exam_con
+	</sql>
+	<select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String">
+		select
+		<include refid="Base_Column_List" />
+		from ep_exam_paper_questions
+		where id = #{id,jdbcType=VARCHAR}
+	</select>
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+		delete from ep_exam_paper_questions
+		where id = #{id,jdbcType=VARCHAR}
+	</delete>
+	<insert id="insert" parameterType="pques">
+		insert into ep_exam_paper_questions (id, que_id, struc_id,
+		seq_num, exam_con)
+		values (#{id,jdbcType=VARCHAR}, #{queId,jdbcType=VARCHAR}, #{strucId,jdbcType=VARCHAR},
+		#{seqNum,jdbcType=INTEGER}, #{examCon,jdbcType=VARCHAR})
+	</insert>
+	<insert id="insertSelective" parameterType="pques">
+		insert into ep_exam_paper_questions
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			id,
+			que_id,
+			struc_id,
+			seq_num,
+			exam_con,
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			#{id,jdbcType=VARCHAR},
+			#{queId,jdbcType=VARCHAR},
+			#{strucId,jdbcType=VARCHAR},
+			#{seqNum,jdbcType=INTEGER},
+			#{examCon,jdbcType=VARCHAR},
+		</trim>
+	</insert>
+	<update id="updateByPrimaryKeySelective" parameterType="pques">
+		update ep_exam_paper_questions
+		<set>
+			<if test="queId != null">
+				que_id = #{queId,jdbcType=VARCHAR},
+			</if>
+			<if test="strucId != null">
+				struc_id = #{strucId,jdbcType=VARCHAR},
+			</if>
+			<if test="seqNum != null">
+				seq_num = #{seqNum,jdbcType=INTEGER},
+			</if>
+			<if test="examCon != null">
+				exam_con = #{examCon,jdbcType=VARCHAR},
+			</if>
+		</set>
+		where id = #{id,jdbcType=VARCHAR}
+	</update>
+	<update id="updateByPrimaryKey" parameterType="pques">
+		update ep_exam_paper_questions
+		set que_id = #{queId,jdbcType=VARCHAR},
+		struc_id = #{strucId,jdbcType=VARCHAR},
+		seq_num = #{seqNum,jdbcType=INTEGER},
+		exam_con = #{examCon,jdbcType=VARCHAR}
+		where id = #{id,jdbcType=VARCHAR}
+	</update>
+</mapper>

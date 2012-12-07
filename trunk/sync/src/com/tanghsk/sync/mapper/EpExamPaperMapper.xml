@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "mybatis-3-mapper.dtd" >
+<mapper namespace="com.tanghsk.sync.mapper.EpExamPaperMapper">
+	<resultMap id="BaseResultMap" type="paper">
+		<id column="id" property="id" jdbcType="VARCHAR" />
+		<result column="subject_id" property="subjectId" jdbcType="VARCHAR" />
+		<result column="status" property="status" jdbcType="VARCHAR" />
+		<result column="paper_name" property="paperName" jdbcType="VARCHAR" />
+		<result column="listening_file" property="listeningFile" jdbcType="VARCHAR" />
+		<result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+		<result column="test_num" property="testNum" jdbcType="INTEGER" />
+		<result column="exam_time" property="examTime" jdbcType="INTEGER" />
+		<result column="notice" property="notice" jdbcType="VARCHAR" />
+	</resultMap>
+	<sql id="Base_Column_List">
+		id, subject_id, `status`, paper_name, listening_file, create_time, test_num, exam_time,
+		notice
+	</sql>
+	<select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String">
+		select
+		<include refid="Base_Column_List" />
+		from ep_exam_paper
+		where id = #{id,jdbcType=VARCHAR}
+	</select>
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+		delete from ep_exam_paper
+		where id = #{id,jdbcType=VARCHAR}
+	</delete>
+	<insert id="insert" parameterType="paper">
+		insert into ep_exam_paper (id, subject_id, `status`,
+		paper_name, listening_file, create_time,
+		test_num, exam_time, notice
+		)
+		values (#{id,jdbcType=VARCHAR}, #{subjectId,jdbcType=VARCHAR}, #{status,jdbcType=VARCHAR},
+		#{paperName,jdbcType=VARCHAR}, #{listeningFile,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP},
+		#{testNum,jdbcType=INTEGER}, #{examTime,jdbcType=INTEGER}, #{notice,jdbcType=VARCHAR}
+		)
+	</insert>
+	<insert id="insertSelective" parameterType="paper">
+		insert into ep_exam_paper
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			id,
+			subject_id,
+			`status`,
+			paper_name,
+			listening_file,
+			create_time,
+			test_num,
+			exam_time,
+			notice,
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			#{id,jdbcType=VARCHAR},
+			#{subjectId,jdbcType=VARCHAR},
+			#{status,jdbcType=VARCHAR},
+			#{paperName,jdbcType=VARCHAR},
+			#{listeningFile,jdbcType=VARCHAR},
+			#{createTime,jdbcType=TIMESTAMP},
+			#{testNum,jdbcType=INTEGER},
+			#{examTime,jdbcType=INTEGER},
+			#{notice,jdbcType=VARCHAR},
+		</trim>
+	</insert>
+	<update id="updateByPrimaryKeySelective" parameterType="paper">
+		update ep_exam_paper
+		<set>
+			<if test="subjectId != null">
+				subject_id = #{subjectId,jdbcType=VARCHAR},
+			</if>
+			<if test="status != null">
+				`status` = #{status,jdbcType=VARCHAR},
+			</if>
+			<if test="paperName != null">
+				paper_name = #{paperName,jdbcType=VARCHAR},
+			</if>
+			<if test="listeningFile != null">
+				listening_file = #{listeningFile,jdbcType=VARCHAR},
+			</if>
+			<if test="createTime != null">
+				create_time = #{createTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="testNum != null">
+				test_num = #{testNum,jdbcType=INTEGER},
+			</if>
+			<if test="examTime != null">
+				exam_time = #{examTime,jdbcType=INTEGER},
+			</if>
+			<if test="notice != null">
+				notice = #{notice,jdbcType=VARCHAR},
+			</if>
+		</set>
+		where id = #{id,jdbcType=VARCHAR}
+	</update>
+	<update id="updateByPrimaryKey" parameterType="paper">
+		update ep_exam_paper
+		set subject_id = #{subjectId,jdbcType=VARCHAR},
+		`status` = #{status,jdbcType=VARCHAR},
+		paper_name = #{paperName,jdbcType=VARCHAR},
+		listening_file = #{listeningFile,jdbcType=VARCHAR},
+		create_time = #{createTime,jdbcType=TIMESTAMP},
+		test_num = #{testNum,jdbcType=INTEGER},
+		exam_time = #{examTime,jdbcType=INTEGER},
+		notice = #{notice,jdbcType=VARCHAR}
+		where id = #{id,jdbcType=VARCHAR}
+	</update>
+</mapper>

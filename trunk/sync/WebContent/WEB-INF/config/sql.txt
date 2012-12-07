@@ -1,0 +1,121 @@
+SELECT el_questions.id,el_questions.parent_id,el_questions.subject_id,el_questions.seq_num,el_questions.content,el_questions.test_type,el_questions.example_sign
+from el_questions 
+INNER JOIN ep_exam_paper_questions 
+on el_questions.id=ep_exam_paper_questions.que_id
+INNER JOIN ep_exam_paper_strut 
+on ep_exam_paper_strut.id=ep_exam_paper_questions.struc_id
+INNER JOIN ep_exam_paper ON  ep_exam_paper.id=ep_exam_paper_strut.paper_id
+where ep_exam_paper.id='20110324155844517419'
+
+UNION ALL
+
+SELECT el_questions_options.id,el_questions_options.que_id as parent_id,el_questions.subject_id,el_questions_options.seq_num,el_questions_options.content,'' as test_type,'' as example_sign
+from el_questions 
+INNER JOIN ep_exam_paper_questions 
+on el_questions.id=ep_exam_paper_questions.que_id
+INNER JOIN ep_exam_paper_strut 
+on ep_exam_paper_strut.id=ep_exam_paper_questions.struc_id
+INNER JOIN ep_exam_paper ON  ep_exam_paper.id=ep_exam_paper_strut.paper_id
+INNER JOIN el_questions_options ON el_questions.id=el_questions_options.que_id
+where ep_exam_paper.id='20110324155844517419'
+
+
+
+
+----------------------------------------试卷下的所有试题--------------------------------------------------
+创建视图语句
+
+select * from (SELECT a.id,a.parent_id,a.subject_id,a.seq_num,a.content,a.test_type,a.example_sign,ep_exam_paper_strut.id as struct_id,ep_exam_paper_strut.struc_name
+from el_questions a
+INNER JOIN ep_exam_paper_questions 
+on a.id=ep_exam_paper_questions.que_id
+INNER JOIN ep_exam_paper_strut 
+on ep_exam_paper_strut.id=ep_exam_paper_questions.struc_id
+INNER JOIN ep_exam_paper ON  ep_exam_paper.id=ep_exam_paper_strut.paper_id
+where ep_exam_paper.id='20110324155844517419'
+
+UNION ALL
+
+SELECT b.id,b.parent_id,b.subject_id,b.seq_num,b.content,b.test_type,b.example_sign,ep_exam_paper_strut.id as struct_id,ep_exam_paper_strut.struc_name
+from el_questions a
+inner JOIN el_questions b on a.id=b.parent_id
+INNER JOIN ep_exam_paper_questions 
+on a.id=ep_exam_paper_questions.que_id
+INNER JOIN ep_exam_paper_strut 
+on ep_exam_paper_strut.id=ep_exam_paper_questions.struc_id
+INNER JOIN ep_exam_paper ON  ep_exam_paper.id=ep_exam_paper_strut.paper_id
+where ep_exam_paper.id='20110324155844517419') m
+
+UNION ALL
+
+select * from (SELECT el_questions_options.id,el_questions_options.que_id as parent_id,el_questions.subject_id,el_questions_options.seq_num,el_questions_options.content,'' as test_type,'' as example_sign,ep_exam_paper_strut.id as struct_id,ep_exam_paper_strut.struc_name
+from el_questions 
+INNER JOIN ep_exam_paper_questions 
+on el_questions.id=ep_exam_paper_questions.que_id
+INNER JOIN ep_exam_paper_strut 
+on ep_exam_paper_strut.id=ep_exam_paper_questions.struc_id
+INNER JOIN ep_exam_paper ON  ep_exam_paper.id=ep_exam_paper_strut.paper_id
+INNER JOIN el_questions_options ON el_questions.id=el_questions_options.que_id
+where ep_exam_paper.id='20110324155844517419'
+
+union ALL
+
+SELECT el_questions_options.id,el_questions_options.que_id as parent_id,b.subject_id,el_questions_options.seq_num,el_questions_options.content,'' as test_type,'' as example_sign,ep_exam_paper_strut.id as struct_id,ep_exam_paper_strut.struc_name
+from el_questions a
+inner JOIN el_questions b on a.id=b.parent_id
+INNER JOIN ep_exam_paper_questions 
+on b.id=ep_exam_paper_questions.que_id
+INNER JOIN ep_exam_paper_strut 
+on ep_exam_paper_strut.id=ep_exam_paper_questions.struc_id
+INNER JOIN ep_exam_paper ON  ep_exam_paper.id=ep_exam_paper_strut.paper_id
+INNER JOIN el_questions_options ON b.id=el_questions_options.que_id
+where ep_exam_paper.id='20110324155844517419') n 
+-----------------------------------------------------------------------------------------------------------------------
+
+select * from 
+(
+select * from 
+(SELECT a.id,a.parent_id,a.subject_id,a.seq_num,a.content,a.test_type,a.example_sign,ep_exam_paper_strut.id as struct_id,ep_exam_paper_strut.struc_name
+from el_questions a
+INNER JOIN ep_exam_paper_questions 
+on a.id=ep_exam_paper_questions.que_id
+INNER JOIN ep_exam_paper_strut 
+on ep_exam_paper_strut.id=ep_exam_paper_questions.struc_id
+INNER JOIN ep_exam_paper ON  ep_exam_paper.id=ep_exam_paper_strut.paper_id
+-- where ep_exam_paper.id='20110324155844517419'
+UNION ALL
+SELECT b.id,b.parent_id,b.subject_id,b.seq_num,b.content,b.test_type,b.example_sign,ep_exam_paper_strut.id as struct_id,ep_exam_paper_strut.struc_name
+from el_questions a
+inner JOIN el_questions b on a.id=b.parent_id
+INNER JOIN ep_exam_paper_questions 
+on a.id=ep_exam_paper_questions.que_id
+INNER JOIN ep_exam_paper_strut 
+on ep_exam_paper_strut.id=ep_exam_paper_questions.struc_id
+INNER JOIN ep_exam_paper ON  ep_exam_paper.id=ep_exam_paper_strut.paper_id
+-- where ep_exam_paper.id='20110324155844517419'
+) m
+UNION ALL
+select * from 
+(SELECT el_questions_options.id,el_questions_options.que_id as parent_id,el_questions.subject_id,el_questions_options.seq_num,el_questions_options.content,'' as test_type,'' as example_sign,ep_exam_paper_strut.id as struct_id,ep_exam_paper_strut.struc_name
+from el_questions 
+INNER JOIN ep_exam_paper_questions 
+on el_questions.id=ep_exam_paper_questions.que_id
+INNER JOIN ep_exam_paper_strut 
+on ep_exam_paper_strut.id=ep_exam_paper_questions.struc_id
+INNER JOIN ep_exam_paper ON  ep_exam_paper.id=ep_exam_paper_strut.paper_id
+INNER JOIN el_questions_options ON el_questions.id=el_questions_options.que_id
+-- where ep_exam_paper.id='20110324155844517419'
+union ALL
+SELECT el_questions_options.id,el_questions_options.que_id as parent_id,b.subject_id,el_questions_options.seq_num,el_questions_options.content,'' as test_type,'' as example_sign,ep_exam_paper_strut.id as struct_id,ep_exam_paper_strut.struc_name
+from el_questions a
+inner JOIN el_questions b on a.id=b.parent_id
+INNER JOIN ep_exam_paper_questions 
+on b.id=ep_exam_paper_questions.que_id
+INNER JOIN ep_exam_paper_strut 
+on ep_exam_paper_strut.id=ep_exam_paper_questions.struc_id
+INNER JOIN ep_exam_paper ON  ep_exam_paper.id=ep_exam_paper_strut.paper_id
+INNER JOIN el_questions_options ON b.id=el_questions_options.que_id
+-- where ep_exam_paper.id='20110324155844517419'
+) n
+
+) p

@@ -1,0 +1,259 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "mybatis-3-mapper.dtd" >
+<mapper namespace="com.tanghsk.sync.mapper.ElQuestionsMapper">
+	<resultMap id="BaseResultMap" type="question">
+		<id column="id" property="id" jdbcType="VARCHAR" />
+		<result column="parent_id" property="parentId" jdbcType="VARCHAR" />
+		<result column="subject_id" property="subjectId" jdbcType="VARCHAR" />
+		<result column="title" property="title" jdbcType="VARCHAR" />
+		<result column="struc_id" property="strucId" jdbcType="VARCHAR" />
+		<result column="type_id" property="typeId" jdbcType="VARCHAR" />
+		<result column="start_time" property="startTime" jdbcType="INTEGER" />
+		<result column="end_time" property="endTime" jdbcType="INTEGER" />
+		<result column="test_num" property="testNum" jdbcType="INTEGER" />
+		<result column="wma_file" property="wmaFile" jdbcType="VARCHAR" />
+		<result column="test_type" property="testType" jdbcType="VARCHAR" />
+		<result column="width" property="width" jdbcType="INTEGER" />
+		<result column="height" property="height" jdbcType="INTEGER" />
+		<result column="seq_num" property="seqNum" jdbcType="VARCHAR" />
+		<result column="que_answer" property="queAnswer" jdbcType="VARCHAR" />
+		<result column="sign" property="sign" jdbcType="VARCHAR" />
+		<result column="example_sign" property="exampleSign" jdbcType="VARCHAR" />
+		<result column="read_time" property="readTime" jdbcType="INTEGER" />
+		<result column="answer_time" property="answerTime" jdbcType="INTEGER" />
+		<result column="opt_column" property="optColumn" jdbcType="INTEGER" />
+		<result column="drag" property="drag" jdbcType="VARCHAR" />
+		<result column="display_position" property="displayPosition" jdbcType="VARCHAR" />
+		<result column="limit_char" property="limitChar" jdbcType="VARCHAR" />
+		<collection property="elQuestionsOptionssQueId" ofType="questionOptions" column="id"
+			select="com.tanghsk.sync.mapper.mapper.ElQuestionsOptionsMapper.selectByQueId" />
+		<collection property="epExamPaperQuestionssQueId" ofType="com.tanghsk.mock.admin.exam.EpExamPaperQuestions" column="id"
+			select="com.tanghsk.sync.mapper.mapper.EpExamPaperQuestionsMapper.selectByQueId" />
+	</resultMap>
+	<resultMap id="ResultMapWithBLOBs" type="question" extends="BaseResultMap">
+		<result column="content" property="content" jdbcType="LONGVARCHAR" />
+	</resultMap>
+	<sql id="Base_Column_List">
+		id, parent_id, subject_id, title, struc_id, type_id, start_time, end_time, test_num,
+		wma_file, test_type, width, height, seq_num, que_answer, sign, example_sign, read_time,
+		answer_time, opt_column, drag, display_position, limit_char
+	</sql>
+	<sql id="Blob_Column_List">
+		content
+	</sql>
+	<select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.String">
+		select
+		<include refid="Base_Column_List" />
+		,
+		<include refid="Blob_Column_List" />
+		from el_questions
+		where id = #{id,jdbcType=VARCHAR}
+	</select>
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+		delete from el_questions
+		where id = #{id,jdbcType=VARCHAR}
+	</delete>
+	<insert id="insert" parameterType="question">
+		insert into el_questions (id, parent_id, subject_id,
+		title, struc_id, type_id,
+		start_time, end_time, test_num,
+		wma_file, test_type, width,
+		height, seq_num, que_answer,
+		sign, example_sign, read_time,
+		answer_time, opt_column, drag,
+		display_position, limit_char, content
+		)
+		values (#{id,jdbcType=VARCHAR}, #{parentId,jdbcType=VARCHAR}, #{subjectId,jdbcType=VARCHAR},
+		#{title,jdbcType=VARCHAR}, #{strucId,jdbcType=VARCHAR}, #{typeId,jdbcType=VARCHAR},
+		#{startTime,jdbcType=INTEGER}, #{endTime,jdbcType=INTEGER}, #{testNum,jdbcType=INTEGER},
+		#{wmaFile,jdbcType=VARCHAR}, #{testType,jdbcType=VARCHAR}, #{width,jdbcType=INTEGER},
+		#{height,jdbcType=INTEGER}, #{seqNum,jdbcType=VARCHAR}, #{queAnswer,jdbcType=VARCHAR},
+		#{sign,jdbcType=VARCHAR}, #{exampleSign,jdbcType=VARCHAR}, #{readTime,jdbcType=INTEGER},
+		#{answerTime,jdbcType=INTEGER}, #{optColumn,jdbcType=INTEGER}, #{drag,jdbcType=VARCHAR},
+		#{displayPosition,jdbcType=VARCHAR}, #{limitChar,jdbcType=VARCHAR}, #{content,jdbcType=LONGVARCHAR}
+		)
+	</insert>
+	<insert id="insertSelective" parameterType="question">
+		insert into el_questions
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			id,
+			parent_id,
+			subject_id,
+			title,
+			struc_id,
+			type_id,
+			start_time,
+			end_time,
+			test_num,
+			wma_file,
+			test_type,
+			width,
+			height,
+			seq_num,
+			que_answer,
+			sign,
+			example_sign,
+			read_time,
+			answer_time,
+			opt_column,
+			drag,
+			display_position,
+			limit_char,
+			content,
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			#{id,jdbcType=VARCHAR},
+			#{parentId,jdbcType=VARCHAR},
+			#{subjectId,jdbcType=VARCHAR},
+			#{title,jdbcType=VARCHAR},
+			#{strucId,jdbcType=VARCHAR},
+			#{typeId,jdbcType=VARCHAR},
+			#{startTime,jdbcType=INTEGER},
+			#{endTime,jdbcType=INTEGER},
+			#{testNum,jdbcType=INTEGER},
+			#{wmaFile,jdbcType=VARCHAR},
+			#{testType,jdbcType=VARCHAR},
+			#{width,jdbcType=INTEGER},
+			#{height,jdbcType=INTEGER},
+			#{seqNum,jdbcType=VARCHAR},
+			#{queAnswer,jdbcType=VARCHAR},
+			#{sign,jdbcType=VARCHAR},
+			#{exampleSign,jdbcType=VARCHAR},
+			#{readTime,jdbcType=INTEGER},
+			#{answerTime,jdbcType=INTEGER},
+			#{optColumn,jdbcType=INTEGER},
+			#{drag,jdbcType=VARCHAR},
+			#{displayPosition,jdbcType=VARCHAR},
+			#{limitChar,jdbcType=VARCHAR},
+			#{content,jdbcType=LONGVARCHAR},
+		</trim>
+	</insert>
+	<update id="updateByPrimaryKeySelective" parameterType="question">
+		update el_questions
+		<set>
+			<if test="parentId != null">
+				parent_id = #{parentId,jdbcType=VARCHAR},
+			</if>
+			<if test="subjectId != null">
+				subject_id = #{subjectId,jdbcType=VARCHAR},
+			</if>
+			<if test="title != null">
+				title = #{title,jdbcType=VARCHAR},
+			</if>
+			<if test="strucId != null">
+				struc_id = #{strucId,jdbcType=VARCHAR},
+			</if>
+			<if test="typeId != null">
+				type_id = #{typeId,jdbcType=VARCHAR},
+			</if>
+			<if test="startTime != null">
+				start_time = #{startTime,jdbcType=INTEGER},
+			</if>
+			<if test="endTime != null">
+				end_time = #{endTime,jdbcType=INTEGER},
+			</if>
+			<if test="testNum != null">
+				test_num = #{testNum,jdbcType=INTEGER},
+			</if>
+			<if test="wmaFile != null">
+				wma_file = #{wmaFile,jdbcType=VARCHAR},
+			</if>
+			<if test="testType != null">
+				test_type = #{testType,jdbcType=VARCHAR},
+			</if>
+			<if test="width != null">
+				width = #{width,jdbcType=INTEGER},
+			</if>
+			<if test="height != null">
+				height = #{height,jdbcType=INTEGER},
+			</if>
+			<if test="seqNum != null">
+				seq_num = #{seqNum,jdbcType=VARCHAR},
+			</if>
+			<if test="queAnswer != null">
+				que_answer = #{queAnswer,jdbcType=VARCHAR},
+			</if>
+			<if test="sign != null">
+				sign = #{sign,jdbcType=VARCHAR},
+			</if>
+			<if test="exampleSign != null">
+				example_sign = #{exampleSign,jdbcType=VARCHAR},
+			</if>
+			<if test="readTime != null">
+				read_time = #{readTime,jdbcType=INTEGER},
+			</if>
+			<if test="answerTime != null">
+				answer_time = #{answerTime,jdbcType=INTEGER},
+			</if>
+			<if test="optColumn != null">
+				opt_column = #{optColumn,jdbcType=INTEGER},
+			</if>
+			<if test="drag != null">
+				drag = #{drag,jdbcType=VARCHAR},
+			</if>
+			<if test="displayPosition != null">
+				display_position = #{displayPosition,jdbcType=VARCHAR},
+			</if>
+			<if test="limitChar != null">
+				limit_char = #{limitChar,jdbcType=VARCHAR},
+			</if>
+			<if test="content != null">
+				content = #{content,jdbcType=LONGVARCHAR},
+			</if>
+		</set>
+		where id = #{id,jdbcType=VARCHAR}
+	</update>
+	<update id="updateByPrimaryKeyWithBLOBs" parameterType="question">
+		update el_questions
+		set parent_id = #{parentId,jdbcType=VARCHAR},
+		subject_id = #{subjectId,jdbcType=VARCHAR},
+		title = #{title,jdbcType=VARCHAR},
+		struc_id = #{strucId,jdbcType=VARCHAR},
+		type_id = #{typeId,jdbcType=VARCHAR},
+		start_time = #{startTime,jdbcType=INTEGER},
+		end_time = #{endTime,jdbcType=INTEGER},
+		test_num = #{testNum,jdbcType=INTEGER},
+		wma_file = #{wmaFile,jdbcType=VARCHAR},
+		test_type = #{testType,jdbcType=VARCHAR},
+		width = #{width,jdbcType=INTEGER},
+		height = #{height,jdbcType=INTEGER},
+		seq_num = #{seqNum,jdbcType=VARCHAR},
+		que_answer = #{queAnswer,jdbcType=VARCHAR},
+		sign = #{sign,jdbcType=VARCHAR},
+		example_sign = #{exampleSign,jdbcType=VARCHAR},
+		read_time = #{readTime,jdbcType=INTEGER},
+		answer_time = #{answerTime,jdbcType=INTEGER},
+		opt_column = #{optColumn,jdbcType=INTEGER},
+		drag = #{drag,jdbcType=VARCHAR},
+		display_position = #{displayPosition,jdbcType=VARCHAR},
+		limit_char = #{limitChar,jdbcType=VARCHAR},
+		content = #{content,jdbcType=LONGVARCHAR}
+		where id = #{id,jdbcType=VARCHAR}
+	</update>
+	<update id="updateByPrimaryKey" parameterType="question">
+		update el_questions
+		set parent_id = #{parentId,jdbcType=VARCHAR},
+		subject_id = #{subjectId,jdbcType=VARCHAR},
+		title = #{title,jdbcType=VARCHAR},
+		struc_id = #{strucId,jdbcType=VARCHAR},
+		type_id = #{typeId,jdbcType=VARCHAR},
+		start_time = #{startTime,jdbcType=INTEGER},
+		end_time = #{endTime,jdbcType=INTEGER},
+		test_num = #{testNum,jdbcType=INTEGER},
+		wma_file = #{wmaFile,jdbcType=VARCHAR},
+		test_type = #{testType,jdbcType=VARCHAR},
+		width = #{width,jdbcType=INTEGER},
+		height = #{height,jdbcType=INTEGER},
+		seq_num = #{seqNum,jdbcType=VARCHAR},
+		que_answer = #{queAnswer,jdbcType=VARCHAR},
+		sign = #{sign,jdbcType=VARCHAR},
+		example_sign = #{exampleSign,jdbcType=VARCHAR},
+		read_time = #{readTime,jdbcType=INTEGER},
+		answer_time = #{answerTime,jdbcType=INTEGER},
+		opt_column = #{optColumn,jdbcType=INTEGER},
+		drag = #{drag,jdbcType=VARCHAR},
+		display_position = #{displayPosition,jdbcType=VARCHAR},
+		limit_char = #{limitChar,jdbcType=VARCHAR}
+		where id = #{id,jdbcType=VARCHAR}
+	</update>
+</mapper>
