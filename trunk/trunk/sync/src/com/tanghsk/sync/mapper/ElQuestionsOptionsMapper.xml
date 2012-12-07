@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "mybatis-3-mapper.dtd" >
+<mapper namespace="com.tanghsk.sync.mapper.ElQuestionsOptionsMapper">
+	<resultMap id="BaseResultMap" type="option">
+		<id column="id" property="id" jdbcType="VARCHAR" />
+		<result column="que_id" property="queId" jdbcType="VARCHAR" />
+		<result column="seq_num" property="seqNum" jdbcType="VARCHAR" />
+		<result column="content" property="content" jdbcType="VARCHAR" />
+	</resultMap>
+	<select id="selectByQueId" resultMap="BaseResultMap" parameterType="java.lang.String">
+		select
+		<include refid="Base_Column_List" />
+		from el_questions_options where que_id =#{que_id,jdbcType=VARCHAR}
+	</select>
+	<sql id="Base_Column_List">
+		id, que_id, seq_num, content
+	</sql>
+	<select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String">
+		select
+		<include refid="Base_Column_List" />
+		from el_questions_options
+		where id = #{id,jdbcType=VARCHAR}
+	</select>
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+		delete from el_questions_options
+		where id = #{id,jdbcType=VARCHAR}
+	</delete>
+	<insert id="insert" parameterType="option">
+		insert into el_questions_options (id, que_id, seq_num,
+		content)
+		values (#{id,jdbcType=VARCHAR}, #{queId,jdbcType=VARCHAR}, #{seqNum,jdbcType=VARCHAR},
+		#{content,jdbcType=VARCHAR})
+	</insert>
+	<insert id="insertSelective" parameterType="option">
+		insert into el_questions_options
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			id,
+			que_id,
+			seq_num,
+			content,
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			#{id,jdbcType=VARCHAR},
+			#{queId,jdbcType=VARCHAR},
+			#{seqNum,jdbcType=VARCHAR},
+			#{content,jdbcType=VARCHAR},
+		</trim>
+	</insert>
+	<update id="updateByPrimaryKeySelective" parameterType="option">
+		update el_questions_options
+		<set>
+			<if test="queId != null">
+				que_id = #{queId,jdbcType=VARCHAR},
+			</if>
+			<if test="seqNum != null">
+				seq_num = #{seqNum,jdbcType=VARCHAR},
+			</if>
+			<if test="content != null">
+				content = #{content,jdbcType=VARCHAR},
+			</if>
+		</set>
+		where id = #{id,jdbcType=VARCHAR}
+	</update>
+	<update id="updateByPrimaryKey" parameterType="option">
+		update el_questions_options
+		set que_id = #{queId,jdbcType=VARCHAR},
+		seq_num = #{seqNum,jdbcType=VARCHAR},
+		content = #{content,jdbcType=VARCHAR}
+		where id = #{id,jdbcType=VARCHAR}
+	</update>
+</mapper>
